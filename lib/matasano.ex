@@ -1,0 +1,2 @@
+defmodule Matasano do
+end
