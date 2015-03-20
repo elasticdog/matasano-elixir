@@ -5,6 +5,9 @@ defmodule Matasano.Mixfile do
     [app: :matasano,
      version: "0.0.1",
      elixir: "~> 1.0",
+     name: "Matasano Crypto Challenges in Elixir",
+     source_url: "https://github.com/elasticdog/matasano-elixir",
+     homepage_url: "https://github.com/elasticdog/matasano-elixir",
      deps: deps]
   end
 
@@ -25,6 +28,7 @@ defmodule Matasano.Mixfile do
   #
   # Type `mix help deps` for more examples and options
   defp deps do
-    []
+    [{:earmark, "~> 0.1", only: :dev},
+     {:ex_doc, "~> 0.7", only: :dev}]
   end
 end
