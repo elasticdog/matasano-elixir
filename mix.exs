@@ -7,7 +7,7 @@ defmodule Matasano.Mixfile do
      elixir: "~> 1.0",
      name: "Matasano Crypto Challenges in Elixir",
      source_url: "https://github.com/elasticdog/matasano-elixir",
-     homepage_url: "https://github.com/elasticdog/matasano-elixir",
+     homepage_url: "https://elasticdog.github.io/matasano-elixir",
      deps: deps]
   end
 
