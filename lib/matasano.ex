@@ -73,19 +73,22 @@ defmodule Matasano do
     candidates =
       0..255 |> Enum.to_list |> IO.iodata_to_binary |> String.graphemes
 
-    find_xor_cipher_key(ciphertext, candidates)
-    |> repeating_xor(ciphertext)
+    {_key, plaintext, _score} = best_xor_score(ciphertext, candidates)
+    plaintext
   end
 
   @doc """
-  Returns the candidate XOR cipher key that is most likely to decrypt
-  `ciphertext` into English text.
+  Returns data regarding the candidate XOR cipher key that is most likely to
+  decrypt `ciphertext` into English text.
   """
-  @spec find_xor_cipher_key(String.t, [String.t]) :: String.t
-  def find_xor_cipher_key(ciphertext, candidates) do
-    Enum.max_by candidates, fn key ->
+  @spec best_xor_score(String.t, [String.t]) :: {String.t, String.t, float}
+  def best_xor_score(ciphertext, candidates) do
+    key = Enum.max_by candidates, fn key ->
       language_score(repeating_xor(key, ciphertext), @english_distribution)
     end
+    plaintext = repeating_xor(key, ciphertext)
+    score = language_score(plaintext, @english_distribution)
+    {key, plaintext, score}
   end
 
   @doc """
@@ -182,5 +185,28 @@ defmodule Matasano do
       right_value = Map.get(right, key, 0)
       :math.sqrt(left_value * right_value) + acc
     end
+  end
+
+  ## Set 1 Challenge 4
+
+  @doc """
+  Reads file at `path` and returns the line that is most likely to be English
+  text after decrypting it with a XOR cipher.
+  """
+  @spec detect_single_byte_xor(Path.t) :: String.t
+  def detect_single_byte_xor(path) do
+    candidates =
+      0..255 |> Enum.to_list |> IO.iodata_to_binary |> String.graphemes
+
+    File.stream!(path)
+    |>
+    Stream.map(&Base.decode16!(String.rstrip(&1), case: :lower))
+    |>
+    Enum.max_by(fn ciphertext ->
+      {_key, _plaintext, score} = best_xor_score(ciphertext, candidates)
+      score
+    end)
+    |>
+    decrypt_single_byte_xor()
   end
 end

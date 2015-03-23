@@ -23,4 +23,11 @@ defmodule MatasanoTest do
 
     assert Matasano.decrypt_single_byte_xor(ciphertext) == plaintext
   end
+
+  test "detect single-character xor" do
+    data = Path.join("data", "4.txt")
+    plaintext = "Now that the party is jumping\n"
+
+    assert Matasano.detect_single_byte_xor(data) == plaintext
+  end
 end
