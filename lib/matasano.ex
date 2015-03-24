@@ -78,10 +78,10 @@ defmodule Matasano do
   @spec best_xor_score(String.t, [String.t]) :: {String.t, String.t, float}
   def best_xor_score(ciphertext, candidates) do
     key = Enum.max_by candidates, fn key ->
-      language_score(repeating_xor(key, ciphertext), @english_distribution)
+      english_score(repeating_xor(key, ciphertext))
     end
     plaintext = repeating_xor(key, ciphertext)
-    score = language_score(plaintext, @english_distribution)
+    score = english_score(plaintext)
     {key, plaintext, score}
   end
 
@@ -103,6 +103,16 @@ defmodule Matasano do
     |> Stream.cycle
     |> Enum.take(String.length(message))
     |> :crypto.exor(message)
+  end
+
+  @doc """
+  Calculates a score based on the probability of `string` being English text.
+
+  The higher the score, the higher the likelihood of the text being English.
+  """
+  @spec english_score(String.t) :: float
+  def english_score(string) do
+    language_score(string, @english_distribution)
   end
 
   @doc """
