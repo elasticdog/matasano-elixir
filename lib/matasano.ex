@@ -74,10 +74,10 @@ defmodule Matasano do
   """
   @spec best_xor_score(String.t) :: {String.t, String.t, float}
   def best_xor_score(ciphertext) do
-    candidates =
+    all_possible_bytes =
       0..255 |> Enum.to_list |> IO.iodata_to_binary |> String.graphemes
 
-    best_xor_score(ciphertext, candidates)
+    best_xor_score(ciphertext, all_possible_bytes)
   end
 
   @doc """
