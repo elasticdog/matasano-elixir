@@ -38,4 +38,11 @@ defmodule MatasanoTest do
 
     assert Matasano.repeating_xor(key, message) == output
   end
+
+  test "set 1 challenge 6 - break repeating-key xor" do
+    data = Matasano.bytes_from_base64(Path.join("data", "6.txt"))
+    key = "Terminator X: Bring the noise"
+
+    assert Matasano.break_repeating_key_xor(data) == key
+  end
 end

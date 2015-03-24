@@ -64,11 +64,20 @@ defmodule Matasano do
   """
   @spec decrypt_single_byte_xor(String.t) :: String.t
   def decrypt_single_byte_xor(ciphertext) do
+    {_key, plaintext, _score} = best_xor_score(ciphertext)
+    plaintext
+  end
+
+  @doc """
+  Returns data regarding the single-byte XOR cipher key that is most likely to
+  decrypt `ciphertext` into English text.
+  """
+  @spec best_xor_score(String.t) :: {String.t, String.t, float}
+  def best_xor_score(ciphertext) do
     candidates =
       0..255 |> Enum.to_list |> IO.iodata_to_binary |> String.graphemes
 
-    {_key, plaintext, _score} = best_xor_score(ciphertext, candidates)
-    plaintext
+    best_xor_score(ciphertext, candidates)
   end
 
   @doc """
@@ -95,13 +104,16 @@ defmodule Matasano do
       <<7, 14, 14, 3, 0, 19>>
       iex> Matasano.repeating_xor("a", <<7, 14, 14, 3, 0, 19>>)
       "foobar"
+
+      iex> Matasano.repeating_xor("a", "hełło")
+      <<9, 4, 164, 227, 164, 227, 14>>
   """
   @spec repeating_xor(iodata, iodata) :: binary
   def repeating_xor(key, message) do
     key
     |> String.graphemes
     |> Stream.cycle
-    |> Enum.take(String.length(message))
+    |> Enum.take(byte_size(message))
     |> :crypto.exor(message)
   end
 
@@ -125,6 +137,19 @@ defmodule Matasano do
   @spec language_score(String.t, Map) :: float
   def language_score(string, language_distribution) do
     bhattacharyya_coefficient(language_distribution, relative_frequency(string))
+  end
+
+  @doc """
+  Measures the amount of overlap between two statistical samples.
+
+  The Bhattacharyya coefficient will be 0.0 if there is no overlap.
+  """
+  @spec bhattacharyya_coefficient(Map, Map) :: float
+  def bhattacharyya_coefficient(left, right) do
+    Enum.reduce left, 0, fn({key, left_value}, acc) ->
+      right_value = Map.get(right, key, 0)
+      :math.sqrt(left_value * right_value) + acc
+    end
   end
 
   @doc """
@@ -179,36 +204,168 @@ defmodule Matasano do
   end
 
   @doc """
-  Measures the amount of overlap between two statistical samples.
-
-  The Bhattacharyya coefficient will be 0.0 if there is no overlap.
-  """
-  @spec bhattacharyya_coefficient(Map, Map) :: float
-  def bhattacharyya_coefficient(left, right) do
-    Enum.reduce left, 0, fn({key, left_value}, acc) ->
-      right_value = Map.get(right, key, 0)
-      :math.sqrt(left_value * right_value) + acc
-    end
-  end
-
-  @doc """
   Reads file at `path` and returns the line that is most likely to be English
   text after decrypting it with a XOR cipher.
   """
   @spec detect_single_byte_xor(Path.t) :: String.t
   def detect_single_byte_xor(path) do
-    candidates =
-      0..255 |> Enum.to_list |> IO.iodata_to_binary |> String.graphemes
-
     path
     |> File.stream!()
     |> Stream.map(&String.rstrip/1)
     |> Stream.map(&Base.decode16!(&1, case: :lower))
     |>
     Enum.max_by(fn ciphertext ->
-      {_key, _plaintext, score} = best_xor_score(ciphertext, candidates)
+      {_key, _plaintext, score} = best_xor_score(ciphertext)
       score
     end)
     |> decrypt_single_byte_xor()
+  end
+
+  @doc """
+  Reads file at `path` and base 64 decodes its contents.
+  """
+  @spec bytes_from_base64(Path.t) :: String.t
+  def bytes_from_base64(path) do
+    path
+    |> File.stream!()
+    |> Stream.map(&String.rstrip/1)
+    |> Enum.join
+    |> Base.decode64!
+  end
+
+  @doc """
+  Returns the key that is most likely to produce English text when XOR'd with
+  `ciphertext`.
+  """
+  @spec break_repeating_key_xor(String.t) :: String.t
+  def break_repeating_key_xor(ciphertext) do
+    keysize = guess_keysize(ciphertext)
+
+    ciphertext
+    |> key_parts(keysize)
+    |>
+    Enum.map(fn block ->
+      {key, _plaintext, _score} = best_xor_score(block)
+      key
+    end)
+    |> Enum.join()
+  end
+
+  @doc """
+  Tests each of the `guesses` as a key size against the `message` to determine
+  which one has the lowest normalized Hamming distance.
+  """
+  @spec guess_keysize(String.t, [non_neg_integer]) :: non_neg_integer
+  def guess_keysize(message, guesses \\ 2..40) do
+    guesses |> Enum.min_by(&normalized_hamming_distance(message, &1))
+  end
+
+  defp normalized_hamming_distance(string, keysize) do
+    if byte_size(string) < (keysize * 2) do
+      raise ArgumentError, message: "keysize too large for the given string"
+    end
+
+    blocks = chunk(string, keysize)
+    distances = Enum.map Enum.chunk(blocks, 2), fn [a, b] ->
+      hamming_distance(a, b)
+    end
+    average(distances) / keysize
+  end
+
+  @doc """
+  Returns a list containing `n` strings, where each new chunk starts `n` bytes
+  into the `string`.
+
+  If there are not enough bytes to fill the final chunk, the partial chunk will
+  be discarded from the result.
+
+  ## Examples
+
+      iex> Matasano.chunk("abcabcabc", 3)
+      ["abc", "abc", "abc"]
+
+      iex> Matasano.chunk("xxxyyyzzz", 4)
+      ["xxxy", "yyzz"]
+  """
+  @spec chunk(String.t, non_neg_integer) :: [String.t]
+  def chunk(string, n) do
+    string |> String.to_char_list |> Stream.chunk(n) |> Enum.map(&to_string/1)
+  end
+
+  @doc """
+  Returns the number of differing bits between two strings of the same length.
+
+  ## Examples
+
+      iex> Matasano.hamming_distance("this is a test", "wokka wokka!!!")
+      37
+  """
+  @spec hamming_distance(String.t, String.t) :: non_neg_integer
+  def hamming_distance(a, b) do
+    fixed_xor(a, b) |> hamming_weight()
+  end
+
+  @doc """
+  Returns the number of ones in the binary representation of `input`.
+
+  ## Examples
+
+      iex> Matasano.hamming_weight("ABC")
+      7
+  """
+  @spec hamming_weight(String.t | non_neg_integer) :: non_neg_integer
+  def hamming_weight(input) when is_binary(input) do
+    input
+    |> String.to_char_list()
+    |> Enum.reduce 0, &(Matasano.hamming_weight(&1) + &2)
+  end
+  def hamming_weight(input) when is_number(input) do
+    hamming_weight(input, 0)
+  end
+
+  defp hamming_weight(0, acc), do: acc
+  defp hamming_weight(n, acc), do: hamming_weight(div(n, 2), acc + rem(n, 2))
+
+  @doc """
+  Computes the arithmetic mean of the numbers in the given `list`.
+
+  ## Examples
+
+      iex> Matasano.average([1, 2, 3, 4])
+      2.5
+  """
+  def average(list) do
+    Enum.sum(list) / length(list)
+  end
+
+  @doc """
+  Splits the `message` into blocks of `keysize` length, and then transposes the
+  list.
+
+  ## Examples
+
+      iex> Matasano.key_parts("abcabcabc", 3)
+      ["aaa", "bbb", "ccc"]
+  """
+  def key_parts(message, keysize) do
+    message
+    |> chunk(keysize)
+    |> Stream.map(&String.to_char_list/1)
+    |> transpose
+    |> Enum.map(&to_string/1)
+  end
+
+  @doc """
+  Transposes the given `list`.
+
+  ## Examples
+
+      iex> Matasano.transpose([[1, 2, 3], [4, 5, 6]])
+      [[1, 4], [2, 5], [3, 6]]
+  """
+  @spec transpose([List]) :: [List]
+  def transpose([[]|_]), do: []
+  def transpose(list) do
+    [Enum.map(list, &hd/1) | transpose(Enum.map(list, &tl/1))]
   end
 end
