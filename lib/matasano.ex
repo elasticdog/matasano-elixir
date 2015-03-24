@@ -190,15 +190,15 @@ defmodule Matasano do
     candidates =
       0..255 |> Enum.to_list |> IO.iodata_to_binary |> String.graphemes
 
-    File.stream!(path)
-    |>
-    Stream.map(&Base.decode16!(String.rstrip(&1), case: :lower))
+    path
+    |> File.stream!()
+    |> Stream.map(&String.rstrip/1)
+    |> Stream.map(&Base.decode16!(&1, case: :lower))
     |>
     Enum.max_by(fn ciphertext ->
       {_key, _plaintext, score} = best_xor_score(ciphertext, candidates)
       score
     end)
-    |>
-    decrypt_single_byte_xor()
+    |> decrypt_single_byte_xor()
   end
 end
