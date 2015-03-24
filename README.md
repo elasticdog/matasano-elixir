@@ -4,6 +4,8 @@ matasano-elixir
 Solutions to the [Matasano Crypto Challenges](http://cryptopals.com/),
 written in [Elixir](http://elixir-lang.org/).
 
+[![Build Status](https://travis-ci.org/elasticdog/matasano-elixir.svg?branch=master)](https://travis-ci.org/elasticdog/matasano-elixir)
+
 Set 1: Basics
 -------------
 
