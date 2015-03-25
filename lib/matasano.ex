@@ -209,16 +209,38 @@ defmodule Matasano do
   """
   @spec detect_single_byte_xor(Path.t) :: String.t
   def detect_single_byte_xor(path) do
+    {:ok, agent} = Agent.start_link fn -> [] end
+
     path
     |> File.stream!()
     |> Stream.map(&String.rstrip/1)
     |> Stream.map(&Base.decode16!(&1, case: :lower))
     |>
-    Enum.max_by(fn ciphertext ->
-      {_key, _plaintext, score} = best_xor_score(ciphertext)
-      score
+    parallel_map fn(ciphertext) ->
+      best = best_xor_score(ciphertext)
+      Agent.update(agent, fn list ->
+        [best|list]
+      end)
+    end
+
+    {_key, plaintext, _score} =
+      Agent.get(agent, &(&1)) |> Enum.max_by(fn {_, _, score} -> score end)
+
+    plaintext
+  end
+
+  defp parallel_map(collection, function) do
+    parent = self()
+
+    collection
+    |>
+    Enum.map(fn(elem) ->
+      spawn_link fn -> send parent, {function.(elem), self()} end
     end)
-    |> decrypt_single_byte_xor()
+    |>
+    Enum.map(fn(pid) ->
+      receive do {result, ^pid} -> result end
+    end)
   end
 
   @doc """
