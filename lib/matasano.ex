@@ -201,13 +201,21 @@ defmodule Matasano do
 
       iex> Matasano.hamming_weight("ABC")
       7
+
+      iex> Matasano.hamming_weight(255)
+      8
+      iex> Matasano.hamming_weight(256)
+      1
   """
   @spec hamming_weight(String.t | non_neg_integer) :: non_neg_integer
+  def hamming_weight(input)
+
   def hamming_weight(input) when is_binary(input) do
     input
     |> String.to_char_list()
     |> Enum.reduce 0, &(Matasano.hamming_weight(&1) + &2)
   end
+
   def hamming_weight(input) when is_number(input) do
     hamming_weight(input, 0)
   end
