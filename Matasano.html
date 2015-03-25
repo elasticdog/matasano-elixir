@@ -82,24 +82,10 @@ decrypt <code class="inline">ciphertext</code> into English text</p>
   
 </tr>
 <tr>
-  <td class="summary_signature"><a href="#bhattacharyya_coefficient/2">bhattacharyya_coefficient(left, right)</a></td>
-  
-    <td class="summary_synopsis"><p>Measures the amount of overlap between two statistical samples</p>
-</td>
-  
-</tr>
-<tr>
   <td class="summary_signature"><a href="#break_repeating_key_xor/1">break_repeating_key_xor(ciphertext)</a></td>
   
     <td class="summary_synopsis"><p>Returns the key that is most likely to produce English text when XOR’d with
 <code class="inline">ciphertext</code></p>
-</td>
-  
-</tr>
-<tr>
-  <td class="summary_signature"><a href="#character_frequency/1">character_frequency(string)</a></td>
-  
-    <td class="summary_synopsis"><p>Counts the frequency of characters in <code class="inline">string</code></p>
 </td>
   
 </tr>
@@ -124,13 +110,6 @@ XOR against</p>
   
     <td class="summary_synopsis"><p>Returns the element from <code class="inline">collection</code> that is most likely to be English text
 after decrypting it with a XOR cipher</p>
-</td>
-  
-</tr>
-<tr>
-  <td class="summary_signature"><a href="#english_score/1">english_score(string)</a></td>
-  
-    <td class="summary_synopsis"><p>Calculates a score based on the probability of <code class="inline">string</code> being English text</p>
 </td>
   
 </tr>
@@ -179,21 +158,6 @@ list</p>
   
 </tr>
 <tr>
-  <td class="summary_signature"><a href="#language_score/2">language_score(string, language_distribution)</a></td>
-  
-    <td class="summary_synopsis"><p>Calculates a score based on the probability of <code class="inline">string</code> being text of
-a particular language</p>
-</td>
-  
-</tr>
-<tr>
-  <td class="summary_signature"><a href="#relative_frequency/1">relative_frequency(string)</a></td>
-  
-    <td class="summary_synopsis"><p>Calculates the relative frequency of characters in <code class="inline">string</code></p>
-</td>
-  
-</tr>
-<tr>
   <td class="summary_signature"><a href="#repeating_xor/2">repeating_xor(key, message)</a></td>
   
     <td class="summary_synopsis"><p>Performs bit-wise XOR (exclusive or) on the data supplied, repeating <code class="inline">key</code> as
@@ -235,7 +199,7 @@ necessary to ensure equal length</p>
 
   </section>
   
-    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L342" class="view_source">Source</a>
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L226" class="view_source">Source</a>
   
 </section>
 <section class="detail">
@@ -261,7 +225,7 @@ decrypt <code class="inline">ciphertext</code> into English text.</p>
 
   </section>
   
-    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L76" class="view_source">Source</a>
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L46" class="view_source">Source</a>
   
 </section>
 <section class="detail">
@@ -287,33 +251,7 @@ decrypt <code class="inline">ciphertext</code> into English text.</p>
 
   </section>
   
-    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L88" class="view_source">Source</a>
-  
-</section>
-<section class="detail">
-  <div class="detail_header" id="bhattacharyya_coefficient/2">
-    <span class="signature"><strong>bhattacharyya_coefficient(left, right)</strong></span>
-    <div class="detail_header_links">
-      <span class="detail_type">(function)</span>
-      <a href="#bhattacharyya_coefficient/2" class="detail_link" title="Link to this function">#</a>
-      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
-    </div>
-  </div>
-  
-    <p>Specs:</p>
-    <ul class="spec">
-      
-        <li>bhattacharyya_coefficient(Map, Map) :: float</li>
-      
-    </ul>
-  
-  <section class="docstring">
-    <p>Measures the amount of overlap between two statistical samples.</p>
-<p>The Bhattacharyya coefficient will be 0.0 if there is no overlap.</p>
-
-  </section>
-  
-    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L148" class="view_source">Source</a>
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L58" class="view_source">Source</a>
   
 </section>
 <section class="detail">
@@ -339,38 +277,7 @@ decrypt <code class="inline">ciphertext</code> into English text.</p>
 
   </section>
   
-    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L246" class="view_source">Source</a>
-  
-</section>
-<section class="detail">
-  <div class="detail_header" id="character_frequency/1">
-    <span class="signature"><strong>character_frequency(string)</strong></span>
-    <div class="detail_header_links">
-      <span class="detail_type">(function)</span>
-      <a href="#character_frequency/1" class="detail_link" title="Link to this function">#</a>
-      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
-    </div>
-  </div>
-  
-    <p>Specs:</p>
-    <ul class="spec">
-      
-        <li>character_frequency(<a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a>) :: Map</li>
-      
-    </ul>
-  
-  <section class="docstring">
-    <p>Counts the frequency of characters in <code class="inline">string</code>.</p>
-<p>Returns a dictionary of characters mapping to count values.
-All characters are normalized to uppercase.</p>
-<h2>Examples</h2>
-<pre><code class="iex elixir">iex&gt; Matasano.character_frequency(&quot;Hełło world!&quot;)
-%{&quot; &quot; =&gt; 1, &quot;!&quot; =&gt; 1, &quot;D&quot; =&gt; 1, &quot;E&quot; =&gt; 1, &quot;H&quot; =&gt; 1, &quot;L&quot; =&gt; 1, &quot;O&quot; =&gt; 2,
-  &quot;R&quot; =&gt; 1, &quot;W&quot; =&gt; 1, &quot;Ł&quot; =&gt; 2}</code></pre>
-
-  </section>
-  
-    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L196" class="view_source">Source</a>
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L130" class="view_source">Source</a>
   
 </section>
 <section class="detail">
@@ -404,7 +311,7 @@ iex&gt; Matasano.chunk(&quot;xxxyyyzzz&quot;, 4)
 
   </section>
   
-    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L296" class="view_source">Source</a>
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L180" class="view_source">Source</a>
   
 </section>
 <section class="detail">
@@ -430,7 +337,7 @@ XOR against.</p>
 
   </section>
   
-    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L66" class="view_source">Source</a>
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L36" class="view_source">Source</a>
   
 </section>
 <section class="detail">
@@ -456,33 +363,7 @@ after decrypting it with a XOR cipher.</p>
 
   </section>
   
-    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L211" class="view_source">Source</a>
-  
-</section>
-<section class="detail">
-  <div class="detail_header" id="english_score/1">
-    <span class="signature"><strong>english_score(string)</strong></span>
-    <div class="detail_header_links">
-      <span class="detail_type">(function)</span>
-      <a href="#english_score/1" class="detail_link" title="Link to this function">#</a>
-      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
-    </div>
-  </div>
-  
-    <p>Specs:</p>
-    <ul class="spec">
-      
-        <li>english_score(<a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a>) :: float</li>
-      
-    </ul>
-  
-  <section class="docstring">
-    <p>Calculates a score based on the probability of <code class="inline">string</code> being English text.</p>
-<p>The higher the score, the higher the likelihood of the text being English.</p>
-
-  </section>
-  
-    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L126" class="view_source">Source</a>
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L95" class="view_source">Source</a>
   
 </section>
 <section class="detail">
@@ -513,7 +394,7 @@ iex&gt; Matasano.fixed_xor(&quot;the kid don&#39;t play&quot;, key)
 
   </section>
   
-    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L59" class="view_source">Source</a>
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L29" class="view_source">Source</a>
   
 </section>
 <section class="detail">
@@ -539,7 +420,7 @@ which one has the lowest normalized Hamming distance.</p>
 
   </section>
   
-    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L264" class="view_source">Source</a>
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L148" class="view_source">Source</a>
   
 </section>
 <section class="detail">
@@ -567,7 +448,7 @@ which one has the lowest normalized Hamming distance.</p>
 
   </section>
   
-    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L309" class="view_source">Source</a>
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L193" class="view_source">Source</a>
   
 </section>
 <section class="detail">
@@ -595,7 +476,7 @@ which one has the lowest normalized Hamming distance.</p>
 
   </section>
   
-    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L322" class="view_source">Source</a>
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L206" class="view_source">Source</a>
   
 </section>
 <section class="detail">
@@ -620,7 +501,7 @@ which one has the lowest normalized Hamming distance.</p>
 
   </section>
   
-    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L43" class="view_source">Source</a>
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L13" class="view_source">Source</a>
   
 </section>
 <section class="detail">
@@ -642,69 +523,7 @@ list.</p>
 
   </section>
   
-    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L355" class="view_source">Source</a>
-  
-</section>
-<section class="detail">
-  <div class="detail_header" id="language_score/2">
-    <span class="signature"><strong>language_score(string, language_distribution)</strong></span>
-    <div class="detail_header_links">
-      <span class="detail_type">(function)</span>
-      <a href="#language_score/2" class="detail_link" title="Link to this function">#</a>
-      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
-    </div>
-  </div>
-  
-    <p>Specs:</p>
-    <ul class="spec">
-      
-        <li>language_score(<a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a>, Map) :: float</li>
-      
-    </ul>
-  
-  <section class="docstring">
-    <p>Calculates a score based on the probability of <code class="inline">string</code> being text of
-a particular language.</p>
-<p>The higher the score, the higher the likelihood of the text being written in
-the language as defined by the given <code class="inline">language_distribution</code> of characters.</p>
-
-  </section>
-  
-    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L138" class="view_source">Source</a>
-  
-</section>
-<section class="detail">
-  <div class="detail_header" id="relative_frequency/1">
-    <span class="signature"><strong>relative_frequency(string)</strong></span>
-    <div class="detail_header_links">
-      <span class="detail_type">(function)</span>
-      <a href="#relative_frequency/1" class="detail_link" title="Link to this function">#</a>
-      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
-    </div>
-  </div>
-  
-    <p>Specs:</p>
-    <ul class="spec">
-      
-        <li>relative_frequency(<a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a>) :: Map</li>
-      
-    </ul>
-  
-  <section class="docstring">
-    <p>Calculates the relative frequency of characters in <code class="inline">string</code>.</p>
-<p>Returns a dictionary of characters mapping to relative frequency values.
-All characters are normalized to uppercase.</p>
-<h2>Examples</h2>
-<pre><code class="iex elixir">iex&gt; Matasano.relative_frequency(&quot;Hełło world!&quot;)
-%{&quot; &quot; =&gt; 0.08333333333333333, &quot;!&quot; =&gt; 0.08333333333333333,
-  &quot;D&quot; =&gt; 0.08333333333333333, &quot;E&quot; =&gt; 0.08333333333333333,
-  &quot;H&quot; =&gt; 0.08333333333333333, &quot;L&quot; =&gt; 0.08333333333333333,
-  &quot;O&quot; =&gt; 0.16666666666666666, &quot;R&quot; =&gt; 0.08333333333333333,
-  &quot;W&quot; =&gt; 0.08333333333333333, &quot;Ł&quot; =&gt; 0.16666666666666666}</code></pre>
-
-  </section>
-  
-    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L171" class="view_source">Source</a>
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L239" class="view_source">Source</a>
   
 </section>
 <section class="detail">
@@ -738,7 +557,7 @@ iex&gt; Matasano.repeating_xor(&quot;a&quot;, &quot;hełło&quot;)
 
   </section>
   
-    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L112" class="view_source">Source</a>
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L82" class="view_source">Source</a>
   
 </section>
 <section class="detail">
@@ -766,7 +585,7 @@ iex&gt; Matasano.repeating_xor(&quot;a&quot;, &quot;hełło&quot;)
 
   </section>
   
-    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L372" class="view_source">Source</a>
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L256" class="view_source">Source</a>
   
 </section>
 

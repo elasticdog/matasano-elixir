@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Matasano.Language</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+    <link rel="stylesheet" href="css/elixir.css" type="text/css" media="screen" charset="utf-8" />
+    <script type="text/javascript" charset="utf-8">
+      relpath = '';
+      if (relpath != '') relpath += '/';
+    </script>
+
+    <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/highlight.pack.js"></script>
+    <script type="text/javascript" charset="utf-8">
+      hljs.initHighlightingOnLoad();
+      hljs.configure({languages: []}); //disable autodetect
+    </script>
+  </head>
+
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+
+    <section id="content">
+      <div class="breadcrumbs">Matasano Crypto Challenges in Elixir v0.0.1 &rarr; <a href="overview.html">Overview</a> &rarr; <a href="Matasano.html">Matasano</a> &rarr; <a href="Matasano.Language.html">Language</a></div>
+      <h1>
+        Matasano.Language
+        
+      </h1>
+
+      <ul class="summary_links">
+        
+          <li><a href="#summary">Summary</a></li>
+        
+        
+        
+          <li><a href="#functions_details">Functions</a></li>
+        
+        
+        
+      </ul>
+
+      
+        <section id="moduledoc" class="docstring">
+          <p>Functions related to detecting the language of text.</p>
+
+        </section>
+      
+
+      
+        <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano/language.ex#L1" class="view_source">Source</a>
+      
+
+      
+        <h2 id="summary">Summary<span class="detail_header_links"><a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a></span></h2>
+        <table class="summary">
+          <tr>
+  <td class="summary_signature"><a href="#bhattacharyya_coefficient/2">bhattacharyya_coefficient(left, right)</a></td>
+  
+    <td class="summary_synopsis"><p>Measures the amount of overlap between two statistical samples</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#character_frequency/1">character_frequency(string)</a></td>
+  
+    <td class="summary_synopsis"><p>Counts the frequency of characters in <code class="inline">string</code></p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#english_score/1">english_score(string)</a></td>
+  
+    <td class="summary_synopsis"><p>Calculates a score based on the probability of <code class="inline">string</code> being English text</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#language_score/2">language_score(string, language_distribution)</a></td>
+  
+    <td class="summary_synopsis"><p>Calculates a score based on the probability of <code class="inline">string</code> being text of
+a particular language</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#relative_frequency/1">relative_frequency(string)</a></td>
+  
+    <td class="summary_synopsis"><p>Calculates the relative frequency of characters in <code class="inline">string</code></p>
+</td>
+  
+</tr>
+
+        </table>
+      
+
+      
+
+      
+        <section id="functions_details" class="details_list">
+          <h2>Functions</h2>
+          <section class="detail">
+  <div class="detail_header" id="bhattacharyya_coefficient/2">
+    <span class="signature"><strong>bhattacharyya_coefficient(left, right)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#bhattacharyya_coefficient/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>bhattacharyya_coefficient(Map, Map) :: float</li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Measures the amount of overlap between two statistical samples.</p>
+<p>The Bhattacharyya coefficient will be 0.0 if there is no overlap.</p>
+
+  </section>
+  
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano/language.ex#L66" class="view_source">Source</a>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="character_frequency/1">
+    <span class="signature"><strong>character_frequency(string)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#character_frequency/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>character_frequency(<a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a>) :: Map</li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Counts the frequency of characters in <code class="inline">string</code>.</p>
+<p>Returns a dictionary of characters mapping to count values.
+All characters are normalized to uppercase.</p>
+<h2>Examples</h2>
+<pre><code class="iex elixir">iex&gt; Matasano.Language.character_frequency(&quot;Hełło world!&quot;)
+%{&quot; &quot; =&gt; 1, &quot;!&quot; =&gt; 1, &quot;D&quot; =&gt; 1, &quot;E&quot; =&gt; 1, &quot;H&quot; =&gt; 1, &quot;L&quot; =&gt; 1, &quot;O&quot; =&gt; 2,
+  &quot;R&quot; =&gt; 1, &quot;W&quot; =&gt; 1, &quot;Ł&quot; =&gt; 2}</code></pre>
+
+  </section>
+  
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano/language.ex#L114" class="view_source">Source</a>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="english_score/1">
+    <span class="signature"><strong>english_score(string)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#english_score/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>english_score(<a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a>) :: float</li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Calculates a score based on the probability of <code class="inline">string</code> being English text.</p>
+<p>The higher the score, the higher the likelihood of the text being English.</p>
+
+  </section>
+  
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano/language.ex#L44" class="view_source">Source</a>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="language_score/2">
+    <span class="signature"><strong>language_score(string, language_distribution)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#language_score/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>language_score(<a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a>, Map) :: float</li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Calculates a score based on the probability of <code class="inline">string</code> being text of
+a particular language.</p>
+<p>The higher the score, the higher the likelihood of the text being written in
+the language as defined by the given <code class="inline">language_distribution</code> of characters.</p>
+
+  </section>
+  
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano/language.ex#L56" class="view_source">Source</a>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="relative_frequency/1">
+    <span class="signature"><strong>relative_frequency(string)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#relative_frequency/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>relative_frequency(<a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a>) :: Map</li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Calculates the relative frequency of characters in <code class="inline">string</code>.</p>
+<p>Returns a dictionary of characters mapping to relative frequency values.
+All characters are normalized to uppercase.</p>
+<h2>Examples</h2>
+<pre><code class="iex elixir">iex&gt; Matasano.Language.relative_frequency(&quot;Hełło world!&quot;)
+%{&quot; &quot; =&gt; 0.08333333333333333, &quot;!&quot; =&gt; 0.08333333333333333,
+  &quot;D&quot; =&gt; 0.08333333333333333, &quot;E&quot; =&gt; 0.08333333333333333,
+  &quot;H&quot; =&gt; 0.08333333333333333, &quot;L&quot; =&gt; 0.08333333333333333,
+  &quot;O&quot; =&gt; 0.16666666666666666, &quot;R&quot; =&gt; 0.08333333333333333,
+  &quot;W&quot; =&gt; 0.08333333333333333, &quot;Ł&quot; =&gt; 0.16666666666666666}</code></pre>
+
+  </section>
+  
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano/language.ex#L89" class="view_source">Source</a>
+  
+</section>
+
+        </section>
+      
+
+      
+
+      
+    </section>
+  </body>
+</html>
