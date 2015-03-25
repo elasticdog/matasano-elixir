@@ -6,8 +6,31 @@ written in [Elixir](http://elixir-lang.org/).
 
 [![Build Status](https://travis-ci.org/elasticdog/matasano-elixir.svg?branch=master)](https://travis-ci.org/elasticdog/matasano-elixir)
 
-Set 1: Basics
--------------
+> _Generated [ExDoc](https://github.com/elixir-lang/ex_doc) documentation can
+> be found at <https://elasticdog.github.io/matasano-elixir/>_
+
+Usage
+-----
+
+Once you have [installed Elixir](http://elixir-lang.org/install.html), you can
+clone this repository and run all of the tests via the following commands:
+
+    $ git clone https://github.com/elasticdog/matasano-elixir.git
+    $ cd matasano-elixir/
+    $ mix deps.get
+    $ mix test
+
+...add the `--trace` option to the test command to run with detailed reporting.
+
+To explore the project in Elixir's interactive shell, run the following
+command:
+
+    $ iex -S mix
+
+Completed Challenges
+--------------------
+
+### Set 1: Basics
 
 - [x] 1. Convert hex to base64
 - [x] 2. Fixed XOR
@@ -18,8 +41,7 @@ Set 1: Basics
 - [ ] 7. AES in ECB mode
 - [ ] 8. Detect AES in ECB mode
 
-Set 2: Block crypto
--------------------
+### Set 2: Block crypto
 
 - [ ] 9. Implement PKCS#7 padding
 - [ ] 10. Implement CBC mode
@@ -30,8 +52,7 @@ Set 2: Block crypto
 - [ ] 15. PKCS#7 padding validation
 - [ ] 16. CBC bitflipping attacks
 
-Set 3: Block & stream crypto
-----------------------------
+### Set 3: Block & stream crypto
 
 - [ ] 17. The CBC padding oracle
 - [ ] 18. Implement CTR, the stream cipher mode
@@ -42,8 +63,7 @@ Set 3: Block & stream crypto
 - [ ] 23. Clone an MT19937 RNG from its output
 - [ ] 24. Create the MT19937 stream cipher and break it
 
-Set 4: Stream and crypto randomness
------------------------------------
+### Set 4: Stream and crypto randomness
 
 - [ ] 25. Break "random access read/write" AES CTR
 - [ ] 26. CTR bitflipping
@@ -54,8 +74,7 @@ Set 4: Stream and crypto randomness
 - [ ] 31. Implement and break HMAC-SHA1 with an artificial timing leak
 - [ ] 32. Break HMAC-SHA1 with a slightly less artificial timing leak
 
-Set 5: Diffie-Hellman and friends
----------------------------------
+### Set 5: Diffie-Hellman and friends
 
 - [ ] 33. Implement Diffie-Hellman
 - [ ] 34. Implement a MITM key-fixing attack on Diffie-Hellman with parameter injection
@@ -66,8 +85,7 @@ Set 5: Diffie-Hellman and friends
 - [ ] 39. Implement RSA
 - [ ] 40. Implement an E=3 RSA Broadcast attack
 
-Set 6: RSA and DSA
-------------------
+### Set 6: RSA and DSA
 
 - [ ] 41. Implement unpadded message recovery oracle
 - [ ] 42. Bleichenbacher's e=3 RSA Attack
@@ -78,8 +96,7 @@ Set 6: RSA and DSA
 - [ ] 47. Bleichenbacher's PKCS 1.5 Padding Oracle (Simple Case)
 - [ ] 48. Bleichenbacher's PKCS 1.5 Padding Oracle (Complete Case)
 
-Set 7: Hashes
--------------
+### Set 7: Hashes
 
 - [ ] 49. CBC-MAC Message Forgery
 - [ ] 50. Hashing with CBC-MAC
@@ -91,7 +108,7 @@ Set 7: Hashes
 - [ ] 56. RC4 Single-Byte Biases
 
 License
-=======
+-------
 
 matasano-elixir is provided under the terms of the
 [MIT License](http://www.opensource.org/licenses/MIT).
