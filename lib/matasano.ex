@@ -86,12 +86,12 @@ defmodule Matasano do
   """
   @spec best_xor_score(String.t, [String.t]) :: {String.t, String.t, float}
   def best_xor_score(ciphertext, candidates) do
-    key = Enum.max_by candidates, fn key ->
-      english_score(repeating_xor(key, ciphertext))
-    end
-    plaintext = repeating_xor(key, ciphertext)
-    score = english_score(plaintext)
-    {key, plaintext, score}
+    Enum.map(candidates, fn key ->
+      plaintext = repeating_xor(key, ciphertext)
+      score = english_score(plaintext)
+      {key, plaintext, score}
+    end)
+    |> Enum.max_by(fn {_, _, score} -> score end)
   end
 
   @doc """
