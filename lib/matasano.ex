@@ -75,7 +75,7 @@ defmodule Matasano do
   @spec best_xor_score(String.t) :: {String.t, String.t, float}
   def best_xor_score(ciphertext) do
     all_possible_bytes =
-      0..255 |> Enum.to_list |> IO.iodata_to_binary |> String.graphemes
+      0..255 |> Enum.to_list |> IO.iodata_to_binary |> String.codepoints
 
     best_xor_score(ciphertext, all_possible_bytes)
   end
@@ -111,7 +111,7 @@ defmodule Matasano do
   @spec repeating_xor(iodata, iodata) :: binary
   def repeating_xor(key, message) do
     key
-    |> String.graphemes
+    |> String.codepoints
     |> Stream.cycle
     |> Enum.take(byte_size(message))
     |> :crypto.exor(message)
