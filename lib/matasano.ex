@@ -204,19 +204,14 @@ defmodule Matasano do
   end
 
   @doc """
-  Reads file at `path` and returns the line that is most likely to be English
-  text after decrypting it with a XOR cipher.
+  Returns the element from `collection` that is most likely to be English text
+  after decrypting it with a XOR cipher.
   """
-  @spec detect_single_byte_xor(Path.t) :: String.t
-  def detect_single_byte_xor(path) do
+  @spec detect_single_byte_xor([binary]) :: String.t
+  def detect_single_byte_xor(collection) do
     {:ok, agent} = Agent.start_link fn -> [] end
 
-    path
-    |> File.stream!()
-    |> Stream.map(&String.rstrip/1)
-    |> Stream.map(&Base.decode16!(&1, case: :lower))
-    |>
-    parallel_map fn(ciphertext) ->
+    parallel_map collection, fn(ciphertext) ->
       best = best_xor_score(ciphertext)
       Agent.update(agent, fn list ->
         [best|list]
@@ -234,25 +229,13 @@ defmodule Matasano do
 
     collection
     |>
-    Enum.map(fn(elem) ->
-      spawn_link fn -> send parent, {function.(elem), self()} end
+    Enum.map(fn(element) ->
+      spawn_link fn -> send parent, {function.(element), self()} end
     end)
     |>
     Enum.map(fn(pid) ->
       receive do {result, ^pid} -> result end
     end)
-  end
-
-  @doc """
-  Reads file at `path` and base 64 decodes its contents.
-  """
-  @spec bytes_from_base64(Path.t) :: String.t
-  def bytes_from_base64(path) do
-    path
-    |> File.stream!()
-    |> Stream.map(&String.rstrip/1)
-    |> Enum.join
-    |> Base.decode64!
   end
 
   @doc """

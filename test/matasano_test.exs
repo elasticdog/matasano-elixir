@@ -25,7 +25,7 @@ defmodule MatasanoTest do
   end
 
   test "set 1 challenge 4 - detect single-character xor" do
-    data = Path.join("data", "4.txt")
+    data = Matasano.IO.lines_from_hex(Path.join("data", "4.txt"))
     plaintext = "Now that the party is jumping\n"
 
     assert Matasano.detect_single_byte_xor(data) == plaintext
@@ -40,7 +40,7 @@ defmodule MatasanoTest do
   end
 
   test "set 1 challenge 6 - break repeating-key xor" do
-    data = Matasano.bytes_from_base64(Path.join("data", "6.txt"))
+    data = Matasano.IO.bytes_from_base64(Path.join("data", "6.txt"))
     key = "Terminator X: Bring the noise"
 
     assert Matasano.break_repeating_key_xor(data) == key
