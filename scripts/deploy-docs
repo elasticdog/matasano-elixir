@@ -56,7 +56,7 @@ git ls-files --deleted --modified --others --exclude-standard -z | xargs -0 git 
 # only commit/push if changes to the index were actually made
 if ! git diff-index --cached --quiet HEAD; then
 	git commit --message "Sync docs with master branch commit $short_sha"
-	git push --quiet origin gh-pages &> /dev/null
+	git push --quiet origin gh-pages
 fi
 
 git checkout master
