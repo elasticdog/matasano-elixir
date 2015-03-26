@@ -1,10 +1,12 @@
-#!/usr/bin/env bash -v
+#!/usr/bin/env bash
 
 #
 # deploy-docs
 #
 # Generate and commit the ExDoc documentation to the gh-pages branch.
 #
+
+set -v
 
 # reset all variables that might be set
 force=''
