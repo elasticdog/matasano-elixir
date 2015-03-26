@@ -47,16 +47,11 @@ defmodule MatasanoTest do
   end
 
   test "set 1 challenge 7 - aes in ecb mode" do
-    data = Path.join("data", "7.txt")
+    datafile = Path.join("data", "7.txt")
     key = Base.encode16("YELLOW SUBMARINE")
     plaintext = File.read!(Path.join("data", "play-that-funky-music.txt"))
 
-    # I'm going to cheat here and shell out to openssl until Erlang OTP 18 is
-    # released, which added code to the crypto module for AES-128 in ECB mode.
-    args = ["aes-128-ecb", "-in", data, "-K", key, "-base64", "-d"]
-    {output, _exit_status} = System.cmd("openssl", args)
-
-    assert output == plaintext
+    assert Matasano.decrypt_aes_128_ecb(datafile, key) == plaintext
   end
 
   test "set 1 challenge 8 - detect aes in ecb mode" do

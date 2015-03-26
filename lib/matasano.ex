@@ -267,6 +267,20 @@ defmodule Matasano do
   end
 
   @doc """
+  Decrypt the given hexadecimal encoded file at `path` with AES-128 in ECB mode
+  using `key`.
+  """
+  @spec decrypt_aes_128_ecb(Path.t, String.t) :: String.t
+  def decrypt_aes_128_ecb(path, key) do
+    # I'm going to cheat here and shell out to openssl until Erlang OTP 18 is
+    # released, which added code to the crypto module for AES-128 in ECB mode.
+    args = ["aes-128-ecb", "-in", path, "-K", key, "-base64", "-d"]
+    {output, _exit_status} = System.cmd("openssl", args)
+
+    output
+  end
+
+  @doc """
   Returns the first element from `collection` that has a repeated block of the
   given `blocksize`.
 
