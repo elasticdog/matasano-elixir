@@ -39,7 +39,7 @@ Completed Challenges
 - [x] 5. Implement repeating-key XOR
 - [x] 6. Break repeating-key XOR
 - [x] 7. AES in ECB mode
-- [*] 8. Detect AES in ECB mode
+- [x] 8. Detect AES in ECB mode
 
 ### Set 2: Block crypto
 
