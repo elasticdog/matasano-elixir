@@ -19,6 +19,16 @@ defmodule Matasano.IO do
   end
 
   @doc """
+  Returns a list containing the lines from the file at `path`.
+  """
+  @spec lines(Path.t) :: [binary]
+  def lines(path) do
+    path
+    |> File.stream!()
+    |> Stream.map(&String.rstrip/1)
+  end
+
+  @doc """
   Reads file at `path` and base 16 decodes each line.
 
   Returns a list containing the decoded lines.
@@ -26,8 +36,7 @@ defmodule Matasano.IO do
   @spec lines_from_hex(Path.t) :: [binary]
   def lines_from_hex(path) do
     path
-    |> File.stream!()
-    |> Stream.map(&String.rstrip/1)
+    |> lines()
     |> Stream.map(&Base.decode16!(&1, case: :lower))
   end
 end

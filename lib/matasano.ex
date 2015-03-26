@@ -265,4 +265,31 @@ defmodule Matasano do
   def transpose(list) do
     [Enum.map(list, &hd/1) | transpose(Enum.map(list, &tl/1))]
   end
+
+  @doc """
+  Returns the first element from `collection` that has a repeated block of the
+  given `blocksize`.
+
+  This is likely to be an indication of encryption with AES in ECB mode.
+  """
+  @spec detect_aes_in_ecb([binary], non_neg_integer) :: binary
+  def detect_aes_in_ecb(collection, blocksize) do
+    Enum.find collection, &repeated_block?(&1, blocksize)
+  end
+
+  @doc """
+  Detects if the `string` has a repeated block of the given `blocksize`.
+
+      iex> Matasano.repeated_block?("abcabc", 2)
+      false
+      iex> Matasano.repeated_block?("abcabc", 3)
+      true
+  """
+  @spec repeated_block?(String.t, non_neg_integer) :: boolean
+  def repeated_block?(string, blocksize) do
+    blocks = string |> chunk(blocksize)
+    block_set = Enum.reduce blocks, %HashSet{}, &HashSet.put(&2, &1)
+
+    length(blocks) != HashSet.size(block_set)
+  end
 end
