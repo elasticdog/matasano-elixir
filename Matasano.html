@@ -106,6 +106,14 @@ XOR against</p>
   
 </tr>
 <tr>
+  <td class="summary_signature"><a href="#detect_aes_in_ecb/2">detect_aes_in_ecb(collection, blocksize)</a></td>
+  
+    <td class="summary_synopsis"><p>Returns the first element from <code class="inline">collection</code> that has a repeated block of the
+given <code class="inline">blocksize</code></p>
+</td>
+  
+</tr>
+<tr>
   <td class="summary_signature"><a href="#detect_single_byte_xor/1">detect_single_byte_xor(collection)</a></td>
   
     <td class="summary_synopsis"><p>Returns the element from <code class="inline">collection</code> that is most likely to be English text
@@ -154,6 +162,13 @@ which one has the lowest normalized Hamming distance</p>
   
     <td class="summary_synopsis"><p>Splits the <code class="inline">message</code> into blocks of <code class="inline">keysize</code> length, and then transposes the
 list</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#repeated_block?/2">repeated_block?(string, blocksize)</a></td>
+  
+    <td class="summary_synopsis"><p>Detects if the <code class="inline">string</code> has a repeated block of the given <code class="inline">blocksize</code></p>
 </td>
   
 </tr>
@@ -338,6 +353,33 @@ XOR against.</p>
   </section>
   
     <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L36" class="view_source">Source</a>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="detect_aes_in_ecb/2">
+    <span class="signature"><strong>detect_aes_in_ecb(collection, blocksize)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#detect_aes_in_ecb/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>detect_aes_in_ecb([binary], non_neg_integer) :: binary</li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Returns the first element from <code class="inline">collection</code> that has a repeated block of the
+given <code class="inline">blocksize</code>.</p>
+<p>This is likely to be an indication of encryption with AES in ECB mode.</p>
+
+  </section>
+  
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L276" class="view_source">Source</a>
   
 </section>
 <section class="detail">
@@ -529,6 +571,35 @@ list.</p>
   </section>
   
     <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L247" class="view_source">Source</a>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="repeated_block?/2">
+    <span class="signature"><strong>repeated_block?(string, blocksize)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#repeated_block?/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>repeated_block?(<a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a>, non_neg_integer) :: boolean</li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Detects if the <code class="inline">string</code> has a repeated block of the given <code class="inline">blocksize</code>.</p>
+<pre><code class="iex elixir">iex&gt; Matasano.repeated_block?(&quot;abcabc&quot;, 2)
+false
+iex&gt; Matasano.repeated_block?(&quot;abcabc&quot;, 3)
+true</code></pre>
+
+  </section>
+  
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L289" class="view_source">Source</a>
   
 </section>
 <section class="detail">
