@@ -12,6 +12,7 @@ cache:
 after_success:
   - git config user.name 'Travis CI'
   - git config user.email 'build@travis-ci.org'
+  - git config url.https://github.com/.insteadOf git://github.com/
   - git config credential.helper 'store --file=.git/credentials'
   - printf 'https://%s:@github.com' "$GH_TOKEN" > .git/credentials
   - ./scripts/deploy-docs
