@@ -231,6 +231,7 @@ defmodule Matasano do
       iex> Matasano.average([1, 2, 3, 4])
       2.5
   """
+  @spec average([integer]) :: float
   def average(list) do
     Enum.sum(list) / length(list)
   end
@@ -244,6 +245,7 @@ defmodule Matasano do
       iex> Matasano.key_parts("abcabcabc", 3)
       ["aaa", "bbb", "ccc"]
   """
+  @spec key_parts(String.t, non_neg_integer) :: [String.t]
   def key_parts(message, keysize) do
     message
     |> chunk(keysize)
