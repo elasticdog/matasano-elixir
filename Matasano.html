@@ -98,6 +98,14 @@ into the <code class="inline">string</code></p>
   
 </tr>
 <tr>
+  <td class="summary_signature"><a href="#decrypt_aes_128_ecb/2">decrypt_aes_128_ecb(path, key)</a></td>
+  
+    <td class="summary_synopsis"><p>Decrypt the given hexadecimal encoded file at <code class="inline">path</code> with AES-128 in ECB mode
+using <code class="inline">key</code></p>
+</td>
+  
+</tr>
+<tr>
   <td class="summary_signature"><a href="#decrypt_single_byte_xor/1">decrypt_single_byte_xor(ciphertext)</a></td>
   
     <td class="summary_synopsis"><p>Decrypts <code class="inline">ciphertext</code> by testing all possible single byte values as a key to
@@ -330,6 +338,32 @@ iex&gt; Matasano.chunk(&quot;xxxyyyzzz&quot;, 4)
   
 </section>
 <section class="detail">
+  <div class="detail_header" id="decrypt_aes_128_ecb/2">
+    <span class="signature"><strong>decrypt_aes_128_ecb(path, key)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#decrypt_aes_128_ecb/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>decrypt_aes_128_ecb(<a href="http://elixir-lang.org/docs/stable/elixir/Path.html#t:t/0">Path.t</a>, <a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a>) :: <a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a></li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Decrypt the given hexadecimal encoded file at <code class="inline">path</code> with AES-128 in ECB mode
+using <code class="inline">key</code>.</p>
+
+  </section>
+  
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L274" class="view_source">Source</a>
+  
+</section>
+<section class="detail">
   <div class="detail_header" id="decrypt_single_byte_xor/1">
     <span class="signature"><strong>decrypt_single_byte_xor(ciphertext)</strong></span>
     <div class="detail_header_links">
@@ -379,7 +413,7 @@ given <code class="inline">blocksize</code>.</p>
 
   </section>
   
-    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L276" class="view_source">Source</a>
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L290" class="view_source">Source</a>
   
 </section>
 <section class="detail">
@@ -599,7 +633,7 @@ true</code></pre>
 
   </section>
   
-    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L289" class="view_source">Source</a>
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L303" class="view_source">Source</a>
   
 </section>
 <section class="detail">
