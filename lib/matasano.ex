@@ -316,7 +316,7 @@ defmodule Matasano do
   ## Examples
 
       iex> Matasano.pkcs7_padding("HELLO", 4)
-      "HELLO\x03\x03\x03"
+      <<72, 69, 76, 76, 79, 3, 3, 3>>
   """
   @spec pkcs7_padding(String.t, non_neg_integer) :: String.t
   def pkcs7_padding(message, blocksize) do
