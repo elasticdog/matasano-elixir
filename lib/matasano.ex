@@ -262,19 +262,25 @@ defmodule Matasano do
 
   @doc """
   Decrypt the given `data` with AES-128 in ECB mode using `key`.
+
+  PKCS#7 padding will be left intact if you explicitly pass the `:nopad` option.
   """
-  @spec decrypt_aes_128_ecb(iodata, String.t) :: String.t
-  def decrypt_aes_128_ecb(data, key) do
+  @spec decrypt_aes_128_ecb(iodata, String.t, [atom]) :: String.t
+  def decrypt_aes_128_ecb(data, key, opts \\ []) do
     # I'm going to cheat here and shell out to OpenSSL until Erlang OTP 18 is
     # released, which added code to the crypto module for AES-128 in ECB mode.
     path = Path.join(System.tmp_dir!, random_alnum) <> ".tmp"
     File.write!(path, data)
 
-    args = ["aes-128-ecb", "-in", path, "-K", key, "-d"]
+    args = ["aes-128-ecb", "-in", path, "-K", Base.encode16(key), "-d", "-nopad"]
     {output, _exit_status} = System.cmd("openssl", args)
     File.rm!(path)
 
-    output
+    if Enum.member?(opts, :nopad) do
+      output
+    else
+      pkcs7_unpad(output)
+    end
   end
 
   @doc """
@@ -320,14 +326,42 @@ defmodule Matasano do
   Pad the `message` by extending it to the nearest `blocksize` boundary,
   appending the number of bytes of padding to the end of the block.
 
+  If the original `message` is a multiple of `blocksize`, and additional block
+  of bytes with value `blocksize` is added.
+
   ## Examples
 
       iex> Matasano.pkcs7_padding("HELLO", 4)
       <<72, 69, 76, 76, 79, 3, 3, 3>>
+      iex> Matasano.pkcs7_padding("HELLO", 5)
+      <<72, 69, 76, 76, 79, 5, 5, 5, 5, 5>>
   """
   @spec pkcs7_padding(String.t, non_neg_integer) :: String.t
   def pkcs7_padding(message, blocksize) do
     pad = blocksize - rem(byte_size(message), blocksize)
     message <> to_string(List.duplicate(pad, pad))
+  end
+
+  def pkcs7_unpad(data) do
+    <<pad>> = binary_part(data, byte_size(data), -1)
+    binary_part(data, 0, byte_size(data) - pad)
+  end
+
+  @doc """
+  Decrypt the given `data` with AES-128 in CBC mode using `key` and `iv`.
+  """
+  @spec decrypt_aes_128_cbc(iodata, String.t, binary) :: String.t
+  def decrypt_aes_128_cbc(data, key, iv) do
+    rev_blocks = [iv|chunk(data, 16)] |> Enum.reverse
+
+    decrypt_cbc(rev_blocks, key, []) |> pkcs7_unpad
+  end
+
+  defp decrypt_cbc([_], _key, acc), do: Enum.join(acc)
+
+  defp decrypt_cbc([left,right|tail], key, acc) do
+    block = decrypt_aes_128_ecb(left, key, [:nopad]) |> fixed_xor(right)
+    rest = [right|tail]
+    decrypt_cbc(rest, key, [block|acc])
   end
 end
