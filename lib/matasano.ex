@@ -308,4 +308,19 @@ defmodule Matasano do
 
     length(blocks) != HashSet.size(block_set)
   end
+
+  @doc """
+  Pad the `message` by extending it to the nearest `blocksize` boundary,
+  appending the number of bytes of padding to the end of the block.
+
+  ## Examples
+
+      iex> Matasano.pkcs7_padding("HELLO", 4)
+      "HELLO\x03\x03\x03"
+  """
+  @spec pkcs7_padding(String.t, non_neg_integer) :: String.t
+  def pkcs7_padding(message, blocksize) do
+    pad = blocksize - rem(byte_size(message), blocksize)
+    message <> to_string(List.duplicate(pad, pad))
+  end
 end

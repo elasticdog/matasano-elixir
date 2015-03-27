@@ -68,4 +68,13 @@ defmodule MatasanoTest do
 
     assert Matasano.detect_aes_in_ecb(data, 32) == output
   end
+
+  @tag :set2
+  test "set 2 challenge 9 - implement pkcs#7 padding" do
+    message = "YELLOW SUBMARINE"
+    blocksize = 20
+    output = "YELLOW SUBMARINE\x04\x04\x04\x04"
+
+    assert Matasano.pkcs7_padding(message, blocksize) == output
+  end
 end
