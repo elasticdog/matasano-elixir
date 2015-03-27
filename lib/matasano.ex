@@ -11,7 +11,7 @@ defmodule Matasano do
   """
   @spec hex_to_base64(String.t) :: String.t
   def hex_to_base64(string) do
-    Base.decode16!(string, case: :mixed) |> Base.encode64()
+    string |> Base.decode16!(case: :mixed) |> Base.encode64
   end
 
   @doc """
@@ -61,7 +61,7 @@ defmodule Matasano do
       score = english_score(plaintext)
       {key, plaintext, score}
     end)
-    |> Enum.max_by(fn {_, _, score} -> score end)
+    |> Enum.max_by fn {_, _, score} -> score end
   end
 
   @doc """
@@ -97,13 +97,13 @@ defmodule Matasano do
 
     parallel_map collection, fn(ciphertext) ->
       best = best_xor_score(ciphertext)
-      Agent.update(agent, fn list ->
+      Agent.update agent, fn list ->
         [best|list]
-      end)
+      end
     end
 
     {_key, plaintext, _score} =
-      Agent.get(agent, &(&1)) |> Enum.max_by(fn {_, _, score} -> score end)
+      Agent.get(agent, &(&1)) |> Enum.max_by fn {_, _, score} -> score end
 
     plaintext
   end
@@ -113,13 +113,13 @@ defmodule Matasano do
 
     collection
     |>
-    Enum.map(fn(element) ->
+    Enum.map(fn element ->
       spawn_link fn -> send parent, {function.(element), self()} end
     end)
     |>
-    Enum.map(fn(pid) ->
+    Enum.map fn pid ->
       receive do {result, ^pid} -> result end
-    end)
+    end
   end
 
   @doc """
@@ -137,7 +137,7 @@ defmodule Matasano do
       {key, _plaintext, _score} = best_xor_score(block)
       key
     end)
-    |> Enum.join()
+    |> Enum.join
   end
 
   @doc """
@@ -146,7 +146,7 @@ defmodule Matasano do
   """
   @spec guess_keysize(String.t, [non_neg_integer]) :: non_neg_integer
   def guess_keysize(message, guesses \\ 2..40) do
-    guesses |> Enum.min_by(&normalized_hamming_distance(message, &1))
+    Enum.min_by guesses, &normalized_hamming_distance(message, &1)
   end
 
   defp normalized_hamming_distance(string, keysize) do
@@ -178,7 +178,7 @@ defmodule Matasano do
   """
   @spec chunk(String.t, non_neg_integer) :: [String.t]
   def chunk(string, n) do
-    string |> String.to_char_list |> Stream.chunk(n) |> Enum.map(&to_string/1)
+    string |> String.to_char_list |> Stream.chunk(n) |> Enum.map &to_string/1
   end
 
   @doc """
@@ -191,7 +191,7 @@ defmodule Matasano do
   """
   @spec hamming_distance(String.t, String.t) :: non_neg_integer
   def hamming_distance(a, b) do
-    fixed_xor(a, b) |> hamming_weight()
+    fixed_xor(a, b) |> hamming_weight
   end
 
   @doc """
@@ -212,7 +212,7 @@ defmodule Matasano do
 
   def hamming_weight(input) when is_binary(input) do
     input
-    |> String.to_char_list()
+    |> String.to_char_list
     |> Enum.reduce 0, &(Matasano.hamming_weight(&1) + &2)
   end
 
@@ -251,7 +251,7 @@ defmodule Matasano do
     |> chunk(keysize)
     |> Stream.map(&String.to_char_list/1)
     |> transpose
-    |> Enum.map(&to_string/1)
+    |> Enum.map &to_string/1
   end
 
   @doc """
@@ -303,7 +303,7 @@ defmodule Matasano do
   """
   @spec repeated_block?(String.t, non_neg_integer) :: boolean
   def repeated_block?(string, blocksize) do
-    blocks = string |> chunk(blocksize)
+    blocks = chunk(string, blocksize)
     block_set = Enum.reduce blocks, %HashSet{}, &HashSet.put(&2, &1)
 
     length(blocks) != HashSet.size(block_set)

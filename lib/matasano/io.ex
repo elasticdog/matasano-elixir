@@ -11,11 +11,7 @@ defmodule Matasano.IO do
   """
   @spec bytes_from_base64(Path.t) :: binary
   def bytes_from_base64(path) do
-    path
-    |> File.stream!()
-    |> Stream.map(&String.rstrip/1)
-    |> Enum.join
-    |> Base.decode64!
+    path |> lines |> Enum.join |> Base.decode64!
   end
 
   @doc """
@@ -23,9 +19,7 @@ defmodule Matasano.IO do
   """
   @spec lines(Path.t) :: [binary]
   def lines(path) do
-    path
-    |> File.stream!()
-    |> Stream.map(&String.rstrip/1)
+    path |> File.stream! |> Stream.map &String.rstrip/1
   end
 
   @doc """
@@ -35,8 +29,6 @@ defmodule Matasano.IO do
   """
   @spec lines_from_hex(Path.t) :: [binary]
   def lines_from_hex(path) do
-    path
-    |> lines()
-    |> Stream.map(&Base.decode16!(&1, case: :lower))
+    path |> lines |> Stream.map &Base.decode16!(&1, case: :lower)
   end
 end
