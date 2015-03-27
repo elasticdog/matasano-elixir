@@ -174,6 +174,14 @@ list</p>
   
 </tr>
 <tr>
+  <td class="summary_signature"><a href="#pkcs7_padding/2">pkcs7_padding(message, blocksize)</a></td>
+  
+    <td class="summary_synopsis"><p>Pad the <code class="inline">message</code> by extending it to the nearest <code class="inline">blocksize</code> boundary,
+appending the number of bytes of padding to the end of the block</p>
+</td>
+  
+</tr>
+<tr>
   <td class="summary_signature"><a href="#repeated_block?/2">repeated_block?(string, blocksize)</a></td>
   
     <td class="summary_synopsis"><p>Detects if the <code class="inline">string</code> has a repeated block of the given <code class="inline">blocksize</code></p>
@@ -619,6 +627,35 @@ list.</p>
   </section>
   
     <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L249" class="view_source">Source</a>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="pkcs7_padding/2">
+    <span class="signature"><strong>pkcs7_padding(message, blocksize)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#pkcs7_padding/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>pkcs7_padding(<a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a>, non_neg_integer) :: <a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a></li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Pad the <code class="inline">message</code> by extending it to the nearest <code class="inline">blocksize</code> boundary,
+appending the number of bytes of padding to the end of the block.</p>
+<h2>Examples</h2>
+<pre><code class="iex elixir">iex&gt; Matasano.pkcs7_padding(&quot;HELLO&quot;, 4)
+&quot;HELLO&quot;</code></pre>
+
+  </section>
+  
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L322" class="view_source">Source</a>
   
 </section>
 <section class="detail">
