@@ -58,7 +58,7 @@ defmodule Matasano.Language do
   end
 
   @doc """
-  Measures the amount of overlap between two statistical samples.
+  Measures the approximate amount of overlap between two statistical samples.
 
   The Bhattacharyya coefficient will be 0.0 if there is no overlap.
   """
