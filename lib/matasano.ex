@@ -154,8 +154,8 @@ defmodule Matasano do
   end
 
   @doc """
-  Returns a list containing `n` strings, where each new chunk starts `n` bytes
-  into the `string`.
+  Returns a list containing binaries of size `n`, where each new chunk starts
+  `n` bytes into the `data`.
 
   If there are not enough bytes to fill the final chunk, the partial chunk will
   be discarded from the result.
@@ -168,9 +168,9 @@ defmodule Matasano do
       iex> Matasano.chunk("xxxyyyzzz", 4)
       ["xxxy", "yyzz"]
   """
-  @spec chunk(String.t, non_neg_integer) :: [String.t]
-  def chunk(string, n) do
-    string |> String.to_char_list |> Stream.chunk(n) |> Enum.map &to_string/1
+  @spec chunk(binary, non_neg_integer) :: [binary]
+  def chunk(data, n) do
+    for <<chunk :: binary-size(n) <- data>>, do: chunk
   end
 
   @doc """
