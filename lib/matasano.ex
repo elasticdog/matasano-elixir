@@ -269,17 +269,32 @@ defmodule Matasano do
   end
 
   @doc """
-  Decrypt the given hexadecimal encoded file at `path` with AES-128 in ECB mode
-  using `key`.
+  Decrypt the given `data` with AES-128 in ECB mode using `key`.
   """
-  @spec decrypt_aes_128_ecb(Path.t, String.t) :: String.t
-  def decrypt_aes_128_ecb(path, key) do
-    # I'm going to cheat here and shell out to openssl until Erlang OTP 18 is
+  @spec decrypt_aes_128_ecb(iodata, String.t) :: String.t
+  def decrypt_aes_128_ecb(data, key) do
+    # I'm going to cheat here and shell out to OpenSSL until Erlang OTP 18 is
     # released, which added code to the crypto module for AES-128 in ECB mode.
-    args = ["aes-128-ecb", "-in", path, "-K", key, "-base64", "-d"]
+    path = System.tmp_dir! <> random_alnum <> ".tmp"
+    File.write!(path, data)
+
+    args = ["aes-128-ecb", "-in", path, "-K", key, "-d"]
     {output, _exit_status} = System.cmd("openssl", args)
+    File.rm!(path)
 
     output
+  end
+
+  @doc """
+  Generates a random string of alphanumeric characters of the requested `size`.
+  """
+  @spec random_alnum(non_neg_integer) :: String.t
+  def random_alnum(size \\ 16) do
+    alnum = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+    bound = byte_size(alnum)
+    Enum.reduce 1..size, "", fn(_, acc) ->
+      acc <> String.at(alnum, :random.uniform(bound) - 1)
+    end
   end
 
   @doc """

@@ -54,11 +54,11 @@ defmodule MatasanoTest do
 
   @tag :set1
   test "set 1 challenge 7 - aes in ecb mode" do
-    datafile = Path.join("data", "7.txt")
+    data = Matasano.IO.bytes_from_base64(Path.join("data", "7.txt"))
     key = Base.encode16("YELLOW SUBMARINE")
     plaintext = File.read!(Path.join("data", "play-that-funky-music.txt"))
 
-    assert Matasano.decrypt_aes_128_ecb(datafile, key) == plaintext
+    assert Matasano.decrypt_aes_128_ecb(data, key) == plaintext
   end
 
   @tag :set1
