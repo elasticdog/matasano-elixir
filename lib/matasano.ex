@@ -267,7 +267,7 @@ defmodule Matasano do
   def decrypt_aes_128_ecb(data, key) do
     # I'm going to cheat here and shell out to OpenSSL until Erlang OTP 18 is
     # released, which added code to the crypto module for AES-128 in ECB mode.
-    path = System.tmp_dir! <> random_alnum <> ".tmp"
+    path = Path.join(System.tmp_dir!, random_alnum) <> ".tmp"
     File.write!(path, data)
 
     args = ["aes-128-ecb", "-in", path, "-K", key, "-d"]
