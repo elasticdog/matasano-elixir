@@ -98,10 +98,9 @@ into the <code class="inline">string</code></p>
   
 </tr>
 <tr>
-  <td class="summary_signature"><a href="#decrypt_aes_128_ecb/2">decrypt_aes_128_ecb(path, key)</a></td>
+  <td class="summary_signature"><a href="#decrypt_aes_128_ecb/2">decrypt_aes_128_ecb(data, key)</a></td>
   
-    <td class="summary_synopsis"><p>Decrypt the given hexadecimal encoded file at <code class="inline">path</code> with AES-128 in ECB mode
-using <code class="inline">key</code></p>
+    <td class="summary_synopsis"><p>Decrypt the given <code class="inline">data</code> with AES-128 in ECB mode using <code class="inline">key</code></p>
 </td>
   
 </tr>
@@ -182,6 +181,13 @@ appending the number of bytes of padding to the end of the block</p>
   
 </tr>
 <tr>
+  <td class="summary_signature"><a href="#random_alnum/1">random_alnum(size \\ 16)</a></td>
+  
+    <td class="summary_synopsis"><p>Generates a random string of alphanumeric characters of the requested <code class="inline">size</code></p>
+</td>
+  
+</tr>
+<tr>
   <td class="summary_signature"><a href="#repeated_block?/2">repeated_block?(string, blocksize)</a></td>
   
     <td class="summary_synopsis"><p>Detects if the <code class="inline">string</code> has a repeated block of the given <code class="inline">blocksize</code></p>
@@ -237,7 +243,7 @@ necessary to ensure equal length</p>
 
   </section>
   
-    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L235" class="view_source">Source</a>
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L227" class="view_source">Source</a>
   
 </section>
 <section class="detail">
@@ -315,7 +321,7 @@ decrypt <code class="inline">ciphertext</code> into English text.</p>
 
   </section>
   
-    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L130" class="view_source">Source</a>
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L122" class="view_source">Source</a>
   
 </section>
 <section class="detail">
@@ -349,12 +355,12 @@ iex&gt; Matasano.chunk(&quot;xxxyyyzzz&quot;, 4)
 
   </section>
   
-    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L180" class="view_source">Source</a>
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L172" class="view_source">Source</a>
   
 </section>
 <section class="detail">
   <div class="detail_header" id="decrypt_aes_128_ecb/2">
-    <span class="signature"><strong>decrypt_aes_128_ecb(path, key)</strong></span>
+    <span class="signature"><strong>decrypt_aes_128_ecb(data, key)</strong></span>
     <div class="detail_header_links">
       <span class="detail_type">(function)</span>
       <a href="#decrypt_aes_128_ecb/2" class="detail_link" title="Link to this function">#</a>
@@ -365,17 +371,16 @@ iex&gt; Matasano.chunk(&quot;xxxyyyzzz&quot;, 4)
     <p>Specs:</p>
     <ul class="spec">
       
-        <li>decrypt_aes_128_ecb(<a href="http://elixir-lang.org/docs/stable/elixir/Path.html#t:t/0">Path.t</a>, <a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a>) :: <a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a></li>
+        <li>decrypt_aes_128_ecb(iodata, <a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a>) :: <a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a></li>
       
     </ul>
   
   <section class="docstring">
-    <p>Decrypt the given hexadecimal encoded file at <code class="inline">path</code> with AES-128 in ECB mode
-using <code class="inline">key</code>.</p>
+    <p>Decrypt the given <code class="inline">data</code> with AES-128 in ECB mode using <code class="inline">key</code>.</p>
 
   </section>
   
-    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L276" class="view_source">Source</a>
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L267" class="view_source">Source</a>
   
 </section>
 <section class="detail">
@@ -428,7 +433,7 @@ given <code class="inline">blocksize</code>.</p>
 
   </section>
   
-    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L292" class="view_source">Source</a>
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L299" class="view_source">Source</a>
   
 </section>
 <section class="detail">
@@ -511,7 +516,7 @@ which one has the lowest normalized Hamming distance.</p>
 
   </section>
   
-    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L148" class="view_source">Source</a>
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L140" class="view_source">Source</a>
   
 </section>
 <section class="detail">
@@ -539,7 +544,7 @@ which one has the lowest normalized Hamming distance.</p>
 
   </section>
   
-    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L193" class="view_source">Source</a>
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L185" class="view_source">Source</a>
   
 </section>
 <section class="detail">
@@ -572,7 +577,7 @@ iex&gt; Matasano.hamming_weight(256)
 
   </section>
   
-    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L211" class="view_source">Source</a>
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L203" class="view_source">Source</a>
   
 </section>
 <section class="detail">
@@ -626,7 +631,7 @@ list.</p>
 
   </section>
   
-    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L249" class="view_source">Source</a>
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L241" class="view_source">Source</a>
   
 </section>
 <section class="detail">
@@ -655,7 +660,32 @@ appending the number of bytes of padding to the end of the block.</p>
 
   </section>
   
-    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L322" class="view_source">Source</a>
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L329" class="view_source">Source</a>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="random_alnum/1">
+    <span class="signature"><strong>random_alnum(size \\ 16)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#random_alnum/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>random_alnum(non_neg_integer) :: <a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a></li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Generates a random string of alphanumeric characters of the requested <code class="inline">size</code>.</p>
+
+  </section>
+  
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L284" class="view_source">Source</a>
   
 </section>
 <section class="detail">
@@ -684,7 +714,7 @@ true</code></pre>
 
   </section>
   
-    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L305" class="view_source">Source</a>
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L312" class="view_source">Source</a>
   
 </section>
 <section class="detail">
@@ -746,7 +776,7 @@ iex&gt; Matasano.repeating_xor(&quot;a&quot;, &quot;hełło&quot;)
 
   </section>
   
-    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L266" class="view_source">Source</a>
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L258" class="view_source">Source</a>
   
 </section>
 
