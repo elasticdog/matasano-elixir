@@ -95,7 +95,7 @@ defmodule Matasano do
   def detect_single_byte_xor(collection) do
     {:ok, agent} = Agent.start_link fn -> [] end
 
-    parallel_map collection, fn(ciphertext) ->
+    pmap collection, fn(ciphertext) ->
       best = best_xor_score(ciphertext)
       Agent.update agent, fn list ->
         [best|list]
@@ -108,18 +108,10 @@ defmodule Matasano do
     plaintext
   end
 
-  defp parallel_map(collection, function) do
-    parent = self()
-
+  defp pmap(collection, fun) do
     collection
-    |>
-    Enum.map(fn element ->
-      spawn_link fn -> send parent, {function.(element), self()} end
-    end)
-    |>
-    Enum.map fn pid ->
-      receive do {result, ^pid} -> result end
-    end
+    |> Enum.map(&Task.async(fn -> fun.(&1) end))
+    |> Enum.map(&Task.await/1)
   end
 
   @doc """
