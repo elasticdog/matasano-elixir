@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Matasano.XorCipher</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+    <link rel="stylesheet" href="css/elixir.css" type="text/css" media="screen" charset="utf-8" />
+    <script type="text/javascript" charset="utf-8">
+      relpath = '';
+      if (relpath != '') relpath += '/';
+    </script>
+
+    <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/highlight.pack.js"></script>
+    <script type="text/javascript" charset="utf-8">
+      hljs.initHighlightingOnLoad();
+      hljs.configure({languages: []}); //disable autodetect
+    </script>
+  </head>
+
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+
+    <section id="content">
+      <div class="breadcrumbs">Matasano Crypto Challenges in Elixir v0.0.1 &rarr; <a href="overview.html">Overview</a> &rarr; <a href="Matasano.html">Matasano</a> &rarr; <a href="Matasano.XorCipher.html">XorCipher</a></div>
+      <h1>
+        Matasano.XorCipher
+        
+      </h1>
+
+      <ul class="summary_links">
+        
+          <li><a href="#summary">Summary</a></li>
+        
+        
+        
+          <li><a href="#functions_details">Functions</a></li>
+        
+        
+        
+      </ul>
+
+      
+        <section id="moduledoc" class="docstring">
+          <p>Functions related to encrypting and decrypting data using a XOR Cipher.</p>
+
+        </section>
+      
+
+      
+        <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano/xor_cipher.ex#L1" class="view_source">Source</a>
+      
+
+      
+        <h2 id="summary">Summary<span class="detail_header_links"><a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a></span></h2>
+        <table class="summary">
+          <tr>
+  <td class="summary_signature"><a href="#best_xor_score/1">best_xor_score(ciphertext)</a></td>
+  
+    <td class="summary_synopsis"><p>Returns data regarding the single-byte XOR cipher key that is most likely to
+decrypt <code class="inline">ciphertext</code> into English text</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#best_xor_score/2">best_xor_score(ciphertext, candidates)</a></td>
+  
+    <td class="summary_synopsis"><p>Returns data regarding the candidate XOR cipher key that is most likely to
+decrypt <code class="inline">ciphertext</code> into English text</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#break_repeating_key_xor/1">break_repeating_key_xor(ciphertext)</a></td>
+  
+    <td class="summary_synopsis"><p>Returns the key that is most likely to produce English text when XOR’d with
+<code class="inline">ciphertext</code></p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#decrypt_single_byte_xor/1">decrypt_single_byte_xor(ciphertext)</a></td>
+  
+    <td class="summary_synopsis"><p>Decrypts <code class="inline">ciphertext</code> by testing all possible single byte values as a key to
+XOR against</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#detect_single_byte_xor/1">detect_single_byte_xor(collection)</a></td>
+  
+    <td class="summary_synopsis"><p>Returns the element from <code class="inline">collection</code> that is most likely to be English text
+after decrypting it with a XOR cipher</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#guess_keysize/2">guess_keysize(message, guesses \\ %{__struct__: Range, first: 2, last: 40})</a></td>
+  
+    <td class="summary_synopsis"><p>Tests each of the <code class="inline">guesses</code> as a key size against the <code class="inline">message</code> to determine
+which one has the lowest normalized Hamming distance</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#key_parts/2">key_parts(message, keysize)</a></td>
+  
+    <td class="summary_synopsis"><p>Splits the <code class="inline">message</code> into blocks of <code class="inline">keysize</code> length, and then transposes the
+list</p>
+</td>
+  
+</tr>
+
+        </table>
+      
+
+      
+
+      
+        <section id="functions_details" class="details_list">
+          <h2>Functions</h2>
+          <section class="detail">
+  <div class="detail_header" id="best_xor_score/1">
+    <span class="signature"><strong>best_xor_score(ciphertext)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#best_xor_score/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>best_xor_score(<a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a>) :: {<a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a>, <a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a>, float}</li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Returns data regarding the single-byte XOR cipher key that is most likely to
+decrypt <code class="inline">ciphertext</code> into English text.</p>
+
+  </section>
+  
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano/xor_cipher.ex#L24" class="view_source">Source</a>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="best_xor_score/2">
+    <span class="signature"><strong>best_xor_score(ciphertext, candidates)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#best_xor_score/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>best_xor_score(<a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a>, [<a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a>]) :: {<a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a>, <a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a>, float}</li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Returns data regarding the candidate XOR cipher key that is most likely to
+decrypt <code class="inline">ciphertext</code> into English text.</p>
+
+  </section>
+  
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano/xor_cipher.ex#L36" class="view_source">Source</a>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="break_repeating_key_xor/1">
+    <span class="signature"><strong>break_repeating_key_xor(ciphertext)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#break_repeating_key_xor/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>break_repeating_key_xor(<a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a>) :: <a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a></li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Returns the key that is most likely to produce English text when XOR’d with
+<code class="inline">ciphertext</code>.</p>
+
+  </section>
+  
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano/xor_cipher.ex#L77" class="view_source">Source</a>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="decrypt_single_byte_xor/1">
+    <span class="signature"><strong>decrypt_single_byte_xor(ciphertext)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#decrypt_single_byte_xor/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>decrypt_single_byte_xor(<a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a>) :: <a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a></li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Decrypts <code class="inline">ciphertext</code> by testing all possible single byte values as a key to
+XOR against.</p>
+
+  </section>
+  
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano/xor_cipher.ex#L14" class="view_source">Source</a>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="detect_single_byte_xor/1">
+    <span class="signature"><strong>detect_single_byte_xor(collection)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#detect_single_byte_xor/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>detect_single_byte_xor([binary]) :: <a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a></li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Returns the element from <code class="inline">collection</code> that is most likely to be English text
+after decrypting it with a XOR cipher.</p>
+
+  </section>
+  
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano/xor_cipher.ex#L50" class="view_source">Source</a>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="guess_keysize/2">
+    <span class="signature"><strong>guess_keysize(message, guesses \\ %{__struct__: Range, first: 2, last: 40})</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#guess_keysize/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>guess_keysize(<a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a>, [non_neg_integer]) :: non_neg_integer</li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Tests each of the <code class="inline">guesses</code> as a key size against the <code class="inline">message</code> to determine
+which one has the lowest normalized Hamming distance.</p>
+
+  </section>
+  
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano/xor_cipher.ex#L95" class="view_source">Source</a>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="key_parts/2">
+    <span class="signature"><strong>key_parts(message, keysize)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#key_parts/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>key_parts(<a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a>, non_neg_integer) :: [<a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a>]</li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Splits the <code class="inline">message</code> into blocks of <code class="inline">keysize</code> length, and then transposes the
+list.</p>
+<h2>Examples</h2>
+<pre><code class="iex elixir">iex&gt; Matasano.XorCipher.key_parts(&quot;abcabcabc&quot;, 3)
+[&quot;aaa&quot;, &quot;bbb&quot;, &quot;ccc&quot;]</code></pre>
+
+  </section>
+  
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano/xor_cipher.ex#L121" class="view_source">Source</a>
+  
+</section>
+
+        </section>
+      
+
+      
+
+      
+    </section>
+  </body>
+</html>

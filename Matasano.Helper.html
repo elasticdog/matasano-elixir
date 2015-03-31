@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Matasano.Helper</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+    <link rel="stylesheet" href="css/elixir.css" type="text/css" media="screen" charset="utf-8" />
+    <script type="text/javascript" charset="utf-8">
+      relpath = '';
+      if (relpath != '') relpath += '/';
+    </script>
+
+    <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/highlight.pack.js"></script>
+    <script type="text/javascript" charset="utf-8">
+      hljs.initHighlightingOnLoad();
+      hljs.configure({languages: []}); //disable autodetect
+    </script>
+  </head>
+
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+
+    <section id="content">
+      <div class="breadcrumbs">Matasano Crypto Challenges in Elixir v0.0.1 &rarr; <a href="overview.html">Overview</a> &rarr; <a href="Matasano.html">Matasano</a> &rarr; <a href="Matasano.Helper.html">Helper</a></div>
+      <h1>
+        Matasano.Helper
+        
+      </h1>
+
+      <ul class="summary_links">
+        
+          <li><a href="#summary">Summary</a></li>
+        
+        
+        
+          <li><a href="#functions_details">Functions</a></li>
+        
+        
+        
+      </ul>
+
+      
+        <section id="moduledoc" class="docstring">
+          <p>Helper functions related to solving the
+<a href="http://cryptopals.com/">Matasano Crypto Challenges</a>.</p>
+
+        </section>
+      
+
+      
+        <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano/helper.ex#L1" class="view_source">Source</a>
+      
+
+      
+        <h2 id="summary">Summary<span class="detail_header_links"><a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a></span></h2>
+        <table class="summary">
+          <tr>
+  <td class="summary_signature"><a href="#average/1">average(list)</a></td>
+  
+    <td class="summary_synopsis"><p>Computes the arithmetic mean of the numbers in the given <code class="inline">list</code></p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#chunk/2">chunk(data, n)</a></td>
+  
+    <td class="summary_synopsis"><p>Returns a list containing binaries of size <code class="inline">n</code>, where each new chunk starts
+<code class="inline">n</code> bytes into the <code class="inline">data</code></p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#fixed_xor/2">fixed_xor(a, b)</a></td>
+  
+    <td class="summary_synopsis"><p>Performs bit-wise XOR (exclusive or) on the data supplied</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#hamming_distance/2">hamming_distance(a, b)</a></td>
+  
+    <td class="summary_synopsis"><p>Returns the number of differing bits between two strings of the same length</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#hamming_weight/1">hamming_weight(input)</a></td>
+  
+    <td class="summary_synopsis"><p>Returns the number of ones in the binary representation of <code class="inline">input</code></p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#hex_to_base64/1">hex_to_base64(string)</a></td>
+  
+    <td class="summary_synopsis"><p>Converts a hexadecimal <code class="inline">string</code> into a base 64 encoded string</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#random_alnum/1">random_alnum(size \\ 16)</a></td>
+  
+    <td class="summary_synopsis"><p>Generates a random string of alphanumeric characters of the requested <code class="inline">size</code></p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#repeating_xor/2">repeating_xor(key, message)</a></td>
+  
+    <td class="summary_synopsis"><p>Performs bit-wise XOR (exclusive or) on the data supplied, repeating <code class="inline">key</code> as
+necessary to ensure equal length</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#transpose/1">transpose(list)</a></td>
+  
+    <td class="summary_synopsis"><p>Transposes the given <code class="inline">list</code></p>
+</td>
+  
+</tr>
+
+        </table>
+      
+
+      
+
+      
+        <section id="functions_details" class="details_list">
+          <h2>Functions</h2>
+          <section class="detail">
+  <div class="detail_header" id="average/1">
+    <span class="signature"><strong>average(list)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#average/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>average([integer]) :: float</li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Computes the arithmetic mean of the numbers in the given <code class="inline">list</code>.</p>
+<h2>Examples</h2>
+<pre><code class="iex elixir">iex&gt; Matasano.Helper.average([1, 2, 3, 4])
+2.5</code></pre>
+
+  </section>
+  
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano/helper.ex#L16" class="view_source">Source</a>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="chunk/2">
+    <span class="signature"><strong>chunk(data, n)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#chunk/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>chunk(binary, non_neg_integer) :: [binary]</li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Returns a list containing binaries of size <code class="inline">n</code>, where each new chunk starts
+<code class="inline">n</code> bytes into the <code class="inline">data</code>.</p>
+<p>If there are not enough bytes to fill the final chunk, the partial chunk will
+be discarded from the result.</p>
+<h2>Examples</h2>
+<pre><code class="iex elixir">iex&gt; Matasano.Helper.chunk(&quot;abcabcabc&quot;, 3)
+[&quot;abc&quot;, &quot;abc&quot;, &quot;abc&quot;]
+
+iex&gt; Matasano.Helper.chunk(&quot;xxxyyyzzz&quot;, 4)
+[&quot;xxxy&quot;, &quot;yyzz&quot;]</code></pre>
+
+  </section>
+  
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano/helper.ex#L36" class="view_source">Source</a>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="fixed_xor/2">
+    <span class="signature"><strong>fixed_xor(a, b)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#fixed_xor/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>fixed_xor(iodata, iodata) :: binary</li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Performs bit-wise XOR (exclusive or) on the data supplied.</p>
+<h2>Examples</h2>
+<pre><code class="iex elixir">iex&gt; key = &lt;&lt;28, 1, 17, 0, 31, 1, 1, 0, 6, 26, 2, 75, 83, 83, 80, 9, 24, 28&gt;&gt;
+iex&gt; Matasano.Helper.fixed_xor(&quot;hit the bull&#39;s eye&quot;, key)
+&quot;the kid don&#39;t play&quot;
+iex&gt; Matasano.Helper.fixed_xor(&quot;the kid don&#39;t play&quot;, key)
+&quot;hit the bull&#39;s eye&quot;</code></pre>
+
+  </section>
+  
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano/helper.ex#L52" class="view_source">Source</a>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="hamming_distance/2">
+    <span class="signature"><strong>hamming_distance(a, b)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#hamming_distance/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>hamming_distance(<a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a>, <a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a>) :: non_neg_integer</li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Returns the number of differing bits between two strings of the same length.</p>
+<h2>Examples</h2>
+<pre><code class="iex elixir">iex&gt; Matasano.Helper.hamming_distance(&quot;this is a test&quot;, &quot;wokka wokka!!!&quot;)
+37</code></pre>
+
+  </section>
+  
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano/helper.ex#L63" class="view_source">Source</a>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="hamming_weight/1">
+    <span class="signature"><strong>hamming_weight(input)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#hamming_weight/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>hamming_weight(<a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a> | non_neg_integer) :: non_neg_integer</li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Returns the number of ones in the binary representation of <code class="inline">input</code>.</p>
+<h2>Examples</h2>
+<pre><code class="iex elixir">iex&gt; Matasano.Helper.hamming_weight(&quot;ABC&quot;)
+7
+
+iex&gt; Matasano.Helper.hamming_weight(255)
+8
+iex&gt; Matasano.Helper.hamming_weight(256)
+1</code></pre>
+
+  </section>
+  
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano/helper.ex#L81" class="view_source">Source</a>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="hex_to_base64/1">
+    <span class="signature"><strong>hex_to_base64(string)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#hex_to_base64/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>hex_to_base64(<a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a>) :: <a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a></li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Converts a hexadecimal <code class="inline">string</code> into a base 64 encoded string.</p>
+
+  </section>
+  
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano/helper.ex#L100" class="view_source">Source</a>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="random_alnum/1">
+    <span class="signature"><strong>random_alnum(size \\ 16)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#random_alnum/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>random_alnum(non_neg_integer) :: <a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a></li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Generates a random string of alphanumeric characters of the requested <code class="inline">size</code>.</p>
+
+  </section>
+  
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano/helper.ex#L108" class="view_source">Source</a>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="repeating_xor/2">
+    <span class="signature"><strong>repeating_xor(key, message)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#repeating_xor/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>repeating_xor(iodata, iodata) :: binary</li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Performs bit-wise XOR (exclusive or) on the data supplied, repeating <code class="inline">key</code> as
+necessary to ensure equal length.</p>
+<h2>Examples</h2>
+<pre><code class="iex elixir">iex&gt; Matasano.Helper.repeating_xor(&quot;a&quot;, &quot;foobar&quot;)
+&lt;&lt;7, 14, 14, 3, 0, 19&gt;&gt;
+iex&gt; Matasano.Helper.repeating_xor(&quot;a&quot;, &lt;&lt;7, 14, 14, 3, 0, 19&gt;&gt;)
+&quot;foobar&quot;
+
+iex&gt; Matasano.Helper.repeating_xor(&quot;a&quot;, &quot;hełło&quot;)
+&lt;&lt;9, 4, 164, 227, 164, 227, 14&gt;&gt;</code></pre>
+
+  </section>
+  
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano/helper.ex#L131" class="view_source">Source</a>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="transpose/1">
+    <span class="signature"><strong>transpose(list)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#transpose/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>transpose([List]) :: [List]</li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Transposes the given <code class="inline">list</code>.</p>
+<h2>Examples</h2>
+<pre><code class="iex elixir">iex&gt; Matasano.Helper.transpose([[1, 2, 3], [4, 5, 6]])
+[[1, 4], [2, 5], [3, 6]]</code></pre>
+
+  </section>
+  
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano/helper.ex#L148" class="view_source">Source</a>
+  
+</section>
+
+        </section>
+      
+
+      
+
+      
+    </section>
+  </body>
+</html>

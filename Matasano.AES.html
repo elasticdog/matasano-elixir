@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Matasano.AES</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+    <link rel="stylesheet" href="css/elixir.css" type="text/css" media="screen" charset="utf-8" />
+    <script type="text/javascript" charset="utf-8">
+      relpath = '';
+      if (relpath != '') relpath += '/';
+    </script>
+
+    <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/highlight.pack.js"></script>
+    <script type="text/javascript" charset="utf-8">
+      hljs.initHighlightingOnLoad();
+      hljs.configure({languages: []}); //disable autodetect
+    </script>
+  </head>
+
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+
+    <section id="content">
+      <div class="breadcrumbs">Matasano Crypto Challenges in Elixir v0.0.1 &rarr; <a href="overview.html">Overview</a> &rarr; <a href="Matasano.html">Matasano</a> &rarr; <a href="Matasano.AES.html">AES</a></div>
+      <h1>
+        Matasano.AES
+        
+      </h1>
+
+      <ul class="summary_links">
+        
+          <li><a href="#summary">Summary</a></li>
+        
+        
+        
+          <li><a href="#functions_details">Functions</a></li>
+        
+        
+        
+      </ul>
+
+      
+        <section id="moduledoc" class="docstring">
+          <p>Functions related to encrypting and decrypting data using the Advanced
+Encryption Standard (AES).</p>
+
+        </section>
+      
+
+      
+        <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano/aes.ex#L1" class="view_source">Source</a>
+      
+
+      
+        <h2 id="summary">Summary<span class="detail_header_links"><a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a></span></h2>
+        <table class="summary">
+          <tr>
+  <td class="summary_signature"><a href="#decrypt_aes_128_cbc/3">decrypt_aes_128_cbc(data, key, iv)</a></td>
+  
+    <td class="summary_synopsis"><p>Decrypt the given <code class="inline">data</code> with AES-128 in CBC mode using <code class="inline">key</code> and <code class="inline">iv</code></p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#decrypt_aes_128_ecb/3">decrypt_aes_128_ecb(data, key, opts \\ [])</a></td>
+  
+    <td class="summary_synopsis"><p>Decrypt the given <code class="inline">data</code> with AES-128 in ECB mode using <code class="inline">key</code></p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#detect_aes_in_ecb/2">detect_aes_in_ecb(collection, blocksize)</a></td>
+  
+    <td class="summary_synopsis"><p>Returns the first element from <code class="inline">collection</code> that has a repeated block of the
+given <code class="inline">blocksize</code></p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#encrypt_aes_128_cbc/3">encrypt_aes_128_cbc(data, key, iv)</a></td>
+  
+    <td class="summary_synopsis"><p>Encrypt the given <code class="inline">data</code> with AES-128 in CBC mode using <code class="inline">key</code> and <code class="inline">iv</code></p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#encrypt_aes_128_ecb/3">encrypt_aes_128_ecb(data, key, opts \\ [])</a></td>
+  
+    <td class="summary_synopsis"><p>Encrypt the given <code class="inline">data</code> with AES-128 in ECB mode using <code class="inline">key</code></p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#pkcs7_padding/2">pkcs7_padding(message, blocksize)</a></td>
+  
+    <td class="summary_synopsis"><p>Pad the <code class="inline">message</code> by extending it to the nearest <code class="inline">blocksize</code> boundary,
+appending the number of bytes of padding to the end of the block</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#pkcs7_unpad/1">pkcs7_unpad(data)</a></td>
+  
+    <td class="summary_synopsis"><p>Remove the PKCS#7 padding from the end of <code class="inline">data</code></p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#repeated_block?/2">repeated_block?(string, blocksize)</a></td>
+  
+    <td class="summary_synopsis"><p>Detects if the <code class="inline">string</code> has a repeated block of the given <code class="inline">blocksize</code></p>
+</td>
+  
+</tr>
+
+        </table>
+      
+
+      
+
+      
+        <section id="functions_details" class="details_list">
+          <h2>Functions</h2>
+          <section class="detail">
+  <div class="detail_header" id="decrypt_aes_128_cbc/3">
+    <span class="signature"><strong>decrypt_aes_128_cbc(data, key, iv)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#decrypt_aes_128_cbc/3" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>decrypt_aes_128_cbc(iodata, <a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a>, binary) :: <a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a></li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Decrypt the given <code class="inline">data</code> with AES-128 in CBC mode using <code class="inline">key</code> and <code class="inline">iv</code>.</p>
+
+  </section>
+  
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano/aes.ex#L143" class="view_source">Source</a>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="decrypt_aes_128_ecb/3">
+    <span class="signature"><strong>decrypt_aes_128_ecb(data, key, opts \\ [])</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#decrypt_aes_128_ecb/3" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>decrypt_aes_128_ecb(iodata, <a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a>, [atom]) :: <a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a></li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Decrypt the given <code class="inline">data</code> with AES-128 in ECB mode using <code class="inline">key</code>.</p>
+<p>PKCS#7 padding will be left intact if you explicitly pass the <code class="inline">:nopad</code>
+option.</p>
+
+  </section>
+  
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano/aes.ex#L41" class="view_source">Source</a>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="detect_aes_in_ecb/2">
+    <span class="signature"><strong>detect_aes_in_ecb(collection, blocksize)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#detect_aes_in_ecb/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>detect_aes_in_ecb([binary], non_neg_integer) :: binary</li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Returns the first element from <code class="inline">collection</code> that has a repeated block of the
+given <code class="inline">blocksize</code>.</p>
+<p>This is likely to be an indication of encryption with AES in ECB mode.</p>
+
+  </section>
+  
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano/aes.ex#L65" class="view_source">Source</a>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="encrypt_aes_128_cbc/3">
+    <span class="signature"><strong>encrypt_aes_128_cbc(data, key, iv)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#encrypt_aes_128_cbc/3" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>encrypt_aes_128_cbc(iodata, <a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a>, binary) :: <a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a></li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Encrypt the given <code class="inline">data</code> with AES-128 in CBC mode using <code class="inline">key</code> and <code class="inline">iv</code>.</p>
+
+  </section>
+  
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano/aes.ex#L122" class="view_source">Source</a>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="encrypt_aes_128_ecb/3">
+    <span class="signature"><strong>encrypt_aes_128_ecb(data, key, opts \\ [])</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#encrypt_aes_128_ecb/3" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>encrypt_aes_128_ecb(iodata, <a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a>, [atom]) :: <a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a></li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Encrypt the given <code class="inline">data</code> with AES-128 in ECB mode using <code class="inline">key</code>.</p>
+<p>PKCS#7 padding will not be added to <code class="inline">data</code> if you explicitly pass the
+<code class="inline">:nopad</code> option.</p>
+
+  </section>
+  
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano/aes.ex#L16" class="view_source">Source</a>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="pkcs7_padding/2">
+    <span class="signature"><strong>pkcs7_padding(message, blocksize)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#pkcs7_padding/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>pkcs7_padding(<a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a>, non_neg_integer) :: <a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a></li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Pad the <code class="inline">message</code> by extending it to the nearest <code class="inline">blocksize</code> boundary,
+appending the number of bytes of padding to the end of the block.</p>
+<p>If the original <code class="inline">message</code> is a multiple of <code class="inline">blocksize</code>, and additional block
+of bytes with value <code class="inline">blocksize</code> is added.</p>
+<h2>Examples</h2>
+<pre><code class="iex elixir">iex&gt; Matasano.AES.pkcs7_padding(&quot;HELLO&quot;, 4)
+&lt;&lt;72, 69, 76, 76, 79, 3, 3, 3&gt;&gt;
+iex&gt; Matasano.AES.pkcs7_padding(&quot;HELLO&quot;, 5)
+&lt;&lt;72, 69, 76, 76, 79, 5, 5, 5, 5, 5&gt;&gt;</code></pre>
+
+  </section>
+  
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano/aes.ex#L100" class="view_source">Source</a>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="pkcs7_unpad/1">
+    <span class="signature"><strong>pkcs7_unpad(data)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#pkcs7_unpad/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    <p>Remove the PKCS#7 padding from the end of <code class="inline">data</code>.</p>
+<h2>Examples</h2>
+<pre><code class="iex elixir">iex&gt; Matasano.AES.pkcs7_unpad(&lt;&lt;72, 69, 76, 76, 79, 3, 3, 3&gt;&gt;)
+&quot;HELLO&quot;</code></pre>
+
+  </section>
+  
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano/aes.ex#L113" class="view_source">Source</a>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="repeated_block?/2">
+    <span class="signature"><strong>repeated_block?(string, blocksize)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#repeated_block?/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>repeated_block?(<a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a>, non_neg_integer) :: boolean</li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Detects if the <code class="inline">string</code> has a repeated block of the given <code class="inline">blocksize</code>.</p>
+<pre><code class="iex elixir">iex&gt; Matasano.AES.repeated_block?(&quot;abcabc&quot;, 2)
+false
+iex&gt; Matasano.AES.repeated_block?(&quot;abcabc&quot;, 3)
+true</code></pre>
+
+  </section>
+  
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano/aes.ex#L78" class="view_source">Source</a>
+  
+</section>
+
+        </section>
+      
+
+      
+
+      
+    </section>
+  </body>
+</html>
