@@ -405,7 +405,7 @@ iex&gt; Matasano.chunk(&quot;xxxyyyzzz&quot;, 4)
 
   </section>
   
-    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L397" class="view_source">Source</a>
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L401" class="view_source">Source</a>
   
 </section>
 <section class="detail">
@@ -427,11 +427,12 @@ iex&gt; Matasano.chunk(&quot;xxxyyyzzz&quot;, 4)
   
   <section class="docstring">
     <p>Decrypt the given <code class="inline">data</code> with AES-128 in ECB mode using <code class="inline">key</code>.</p>
-<p>PKCS#7 padding will be left intact if you explicitly pass the <code class="inline">:nopad</code> option.</p>
+<p>PKCS#7 padding will be left intact if you explicitly pass the <code class="inline">:nopad</code>
+option.</p>
 
   </section>
   
-    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L291" class="view_source">Source</a>
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L295" class="view_source">Source</a>
   
 </section>
 <section class="detail">
@@ -484,7 +485,7 @@ given <code class="inline">blocksize</code>.</p>
 
   </section>
   
-    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L327" class="view_source">Source</a>
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L331" class="view_source">Source</a>
   
 </section>
 <section class="detail">
@@ -535,7 +536,7 @@ after decrypting it with a XOR cipher.</p>
 
   </section>
   
-    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L376" class="view_source">Source</a>
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L380" class="view_source">Source</a>
   
 </section>
 <section class="detail">
@@ -557,10 +558,12 @@ after decrypting it with a XOR cipher.</p>
   
   <section class="docstring">
     <p>Encrypt the given <code class="inline">data</code> with AES-128 in ECB mode using <code class="inline">key</code>.</p>
+<p>PKCS#7 padding will not be added to <code class="inline">data</code> if you explicitly pass the
+<code class="inline">:nopad</code> option.</p>
 
   </section>
   
-    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L267" class="view_source">Source</a>
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L270" class="view_source">Source</a>
   
 </section>
 <section class="detail">
@@ -765,7 +768,7 @@ iex&gt; Matasano.pkcs7_padding(&quot;HELLO&quot;, 5)
 
   </section>
   
-    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L362" class="view_source">Source</a>
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L366" class="view_source">Source</a>
   
 </section>
 <section class="detail">
@@ -782,7 +785,7 @@ iex&gt; Matasano.pkcs7_padding(&quot;HELLO&quot;, 5)
     
   </section>
   
-    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L367" class="view_source">Source</a>
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L371" class="view_source">Source</a>
   
 </section>
 <section class="detail">
@@ -807,7 +810,7 @@ iex&gt; Matasano.pkcs7_padding(&quot;HELLO&quot;, 5)
 
   </section>
   
-    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L312" class="view_source">Source</a>
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L316" class="view_source">Source</a>
   
 </section>
 <section class="detail">
@@ -836,7 +839,7 @@ true</code></pre>
 
   </section>
   
-    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L340" class="view_source">Source</a>
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L344" class="view_source">Source</a>
   
 </section>
 <section class="detail">
