@@ -261,6 +261,28 @@ defmodule Matasano do
   end
 
   @doc """
+  Encrypt the given `data` with AES-128 in ECB mode using `key`.
+  """
+  @spec encrypt_aes_128_ecb(iodata, String.t, [atom]) :: String.t
+  def encrypt_aes_128_ecb(data, key, opts \\ []) do
+    # I'm going to cheat here and shell out to OpenSSL until Erlang OTP 18 is
+    # released, which added code to the crypto module for AES-128 in ECB mode.
+    path = Path.join(System.tmp_dir!, random_alnum) <> ".tmp"
+
+    if Enum.member?(opts, :nopad) do
+      File.write!(path, data)
+    else
+      File.write!(path, pkcs7_padding(data, 16))
+    end
+
+    args = ["aes-128-ecb", "-in", path, "-K", Base.encode16(key), "-nopad"]
+    {output, _exit_status} = System.cmd("openssl", args)
+    File.rm!(path)
+
+    output
+  end
+
+  @doc """
   Decrypt the given `data` with AES-128 in ECB mode using `key`.
 
   PKCS#7 padding will be left intact if you explicitly pass the `:nopad` option.
@@ -345,6 +367,27 @@ defmodule Matasano do
   def pkcs7_unpad(data) do
     <<pad>> = binary_part(data, byte_size(data), -1)
     binary_part(data, 0, byte_size(data) - pad)
+  end
+
+  @doc """
+  Encrypt the given `data` with AES-128 in CBC mode using `key` and `iv`.
+  """
+  @spec encrypt_aes_128_cbc(iodata, String.t, binary) :: String.t
+  def encrypt_aes_128_cbc(data, key, iv) do
+    blocks = data |> pkcs7_padding(16) |> chunk(16)
+    encrypt_cbc([iv|blocks], key, [])
+  end
+
+  defp encrypt_cbc([], _key, acc), do: acc |> Enum.reverse |> Enum.join
+
+  defp encrypt_cbc([iv,head|tail], key, []) do
+    block = head |> fixed_xor(iv) |> encrypt_aes_128_ecb(key, [:nopad])
+    encrypt_cbc(tail, key, [block])
+  end
+
+  defp encrypt_cbc([head|tail], key, acc) do
+    block = head |> fixed_xor(hd(acc)) |> encrypt_aes_128_ecb(key, [:nopad])
+    encrypt_cbc(tail, key, [block|acc])
   end
 
   @doc """
