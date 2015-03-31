@@ -262,6 +262,9 @@ defmodule Matasano do
 
   @doc """
   Encrypt the given `data` with AES-128 in ECB mode using `key`.
+
+  PKCS#7 padding will not be added to `data` if you explicitly pass the
+  `:nopad` option.
   """
   @spec encrypt_aes_128_ecb(iodata, String.t, [atom]) :: String.t
   def encrypt_aes_128_ecb(data, key, opts \\ []) do
@@ -285,7 +288,8 @@ defmodule Matasano do
   @doc """
   Decrypt the given `data` with AES-128 in ECB mode using `key`.
 
-  PKCS#7 padding will be left intact if you explicitly pass the `:nopad` option.
+  PKCS#7 padding will be left intact if you explicitly pass the `:nopad`
+  option.
   """
   @spec decrypt_aes_128_ecb(iodata, String.t, [atom]) :: String.t
   def decrypt_aes_128_ecb(data, key, opts \\ []) do
