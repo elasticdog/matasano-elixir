@@ -90,15 +90,22 @@ decrypt <code class="inline">ciphertext</code> into English text</p>
   
 </tr>
 <tr>
-  <td class="summary_signature"><a href="#chunk/2">chunk(string, n)</a></td>
+  <td class="summary_signature"><a href="#chunk/2">chunk(data, n)</a></td>
   
-    <td class="summary_synopsis"><p>Returns a list containing <code class="inline">n</code> strings, where each new chunk starts <code class="inline">n</code> bytes
-into the <code class="inline">string</code></p>
+    <td class="summary_synopsis"><p>Returns a list containing binaries of size <code class="inline">n</code>, where each new chunk starts
+<code class="inline">n</code> bytes into the <code class="inline">data</code></p>
 </td>
   
 </tr>
 <tr>
-  <td class="summary_signature"><a href="#decrypt_aes_128_ecb/2">decrypt_aes_128_ecb(data, key)</a></td>
+  <td class="summary_signature"><a href="#decrypt_aes_128_cbc/3">decrypt_aes_128_cbc(data, key, iv)</a></td>
+  
+    <td class="summary_synopsis"><p>Decrypt the given <code class="inline">data</code> with AES-128 in CBC mode using <code class="inline">key</code> and <code class="inline">iv</code></p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#decrypt_aes_128_ecb/3">decrypt_aes_128_ecb(data, key, opts \\ [])</a></td>
   
     <td class="summary_synopsis"><p>Decrypt the given <code class="inline">data</code> with AES-128 in ECB mode using <code class="inline">key</code></p>
 </td>
@@ -125,6 +132,20 @@ given <code class="inline">blocksize</code></p>
   
     <td class="summary_synopsis"><p>Returns the element from <code class="inline">collection</code> that is most likely to be English text
 after decrypting it with a XOR cipher</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#encrypt_aes_128_cbc/3">encrypt_aes_128_cbc(data, key, iv)</a></td>
+  
+    <td class="summary_synopsis"><p>Encrypt the given <code class="inline">data</code> with AES-128 in CBC mode using <code class="inline">key</code> and <code class="inline">iv</code></p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#encrypt_aes_128_ecb/3">encrypt_aes_128_ecb(data, key, opts \\ [])</a></td>
+  
+    <td class="summary_synopsis"><p>Encrypt the given <code class="inline">data</code> with AES-128 in ECB mode using <code class="inline">key</code></p>
 </td>
   
 </tr>
@@ -178,6 +199,10 @@ list</p>
     <td class="summary_synopsis"><p>Pad the <code class="inline">message</code> by extending it to the nearest <code class="inline">blocksize</code> boundary,
 appending the number of bytes of padding to the end of the block</p>
 </td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#pkcs7_unpad/1">pkcs7_unpad(data)</a></td>
   
 </tr>
 <tr>
@@ -326,7 +351,7 @@ decrypt <code class="inline">ciphertext</code> into English text.</p>
 </section>
 <section class="detail">
   <div class="detail_header" id="chunk/2">
-    <span class="signature"><strong>chunk(string, n)</strong></span>
+    <span class="signature"><strong>chunk(data, n)</strong></span>
     <div class="detail_header_links">
       <span class="detail_type">(function)</span>
       <a href="#chunk/2" class="detail_link" title="Link to this function">#</a>
@@ -337,13 +362,13 @@ decrypt <code class="inline">ciphertext</code> into English text.</p>
     <p>Specs:</p>
     <ul class="spec">
       
-        <li>chunk(<a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a>, non_neg_integer) :: [<a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a>]</li>
+        <li>chunk(binary, non_neg_integer) :: [binary]</li>
       
     </ul>
   
   <section class="docstring">
-    <p>Returns a list containing <code class="inline">n</code> strings, where each new chunk starts <code class="inline">n</code> bytes
-into the <code class="inline">string</code>.</p>
+    <p>Returns a list containing binaries of size <code class="inline">n</code>, where each new chunk starts
+<code class="inline">n</code> bytes into the <code class="inline">data</code>.</p>
 <p>If there are not enough bytes to fill the final chunk, the partial chunk will
 be discarded from the result.</p>
 <h2>Examples</h2>
@@ -359,11 +384,11 @@ iex&gt; Matasano.chunk(&quot;xxxyyyzzz&quot;, 4)
   
 </section>
 <section class="detail">
-  <div class="detail_header" id="decrypt_aes_128_ecb/2">
-    <span class="signature"><strong>decrypt_aes_128_ecb(data, key)</strong></span>
+  <div class="detail_header" id="decrypt_aes_128_cbc/3">
+    <span class="signature"><strong>decrypt_aes_128_cbc(data, key, iv)</strong></span>
     <div class="detail_header_links">
       <span class="detail_type">(function)</span>
-      <a href="#decrypt_aes_128_ecb/2" class="detail_link" title="Link to this function">#</a>
+      <a href="#decrypt_aes_128_cbc/3" class="detail_link" title="Link to this function">#</a>
       <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
     </div>
   </div>
@@ -371,16 +396,42 @@ iex&gt; Matasano.chunk(&quot;xxxyyyzzz&quot;, 4)
     <p>Specs:</p>
     <ul class="spec">
       
-        <li>decrypt_aes_128_ecb(iodata, <a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a>) :: <a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a></li>
+        <li>decrypt_aes_128_cbc(iodata, <a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a>, binary) :: <a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a></li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Decrypt the given <code class="inline">data</code> with AES-128 in CBC mode using <code class="inline">key</code> and <code class="inline">iv</code>.</p>
+
+  </section>
+  
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L397" class="view_source">Source</a>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="decrypt_aes_128_ecb/3">
+    <span class="signature"><strong>decrypt_aes_128_ecb(data, key, opts \\ [])</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#decrypt_aes_128_ecb/3" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>decrypt_aes_128_ecb(iodata, <a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a>, [atom]) :: <a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a></li>
       
     </ul>
   
   <section class="docstring">
     <p>Decrypt the given <code class="inline">data</code> with AES-128 in ECB mode using <code class="inline">key</code>.</p>
+<p>PKCS#7 padding will be left intact if you explicitly pass the <code class="inline">:nopad</code> option.</p>
 
   </section>
   
-    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L267" class="view_source">Source</a>
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L291" class="view_source">Source</a>
   
 </section>
 <section class="detail">
@@ -433,7 +484,7 @@ given <code class="inline">blocksize</code>.</p>
 
   </section>
   
-    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L299" class="view_source">Source</a>
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L327" class="view_source">Source</a>
   
 </section>
 <section class="detail">
@@ -460,6 +511,56 @@ after decrypting it with a XOR cipher.</p>
   </section>
   
     <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L95" class="view_source">Source</a>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="encrypt_aes_128_cbc/3">
+    <span class="signature"><strong>encrypt_aes_128_cbc(data, key, iv)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#encrypt_aes_128_cbc/3" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>encrypt_aes_128_cbc(iodata, <a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a>, binary) :: <a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a></li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Encrypt the given <code class="inline">data</code> with AES-128 in CBC mode using <code class="inline">key</code> and <code class="inline">iv</code>.</p>
+
+  </section>
+  
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L376" class="view_source">Source</a>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="encrypt_aes_128_ecb/3">
+    <span class="signature"><strong>encrypt_aes_128_ecb(data, key, opts \\ [])</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#encrypt_aes_128_ecb/3" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>encrypt_aes_128_ecb(iodata, <a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a>, [atom]) :: <a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a></li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Encrypt the given <code class="inline">data</code> with AES-128 in ECB mode using <code class="inline">key</code>.</p>
+
+  </section>
+  
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L267" class="view_source">Source</a>
   
 </section>
 <section class="detail">
@@ -654,13 +755,34 @@ list.</p>
   <section class="docstring">
     <p>Pad the <code class="inline">message</code> by extending it to the nearest <code class="inline">blocksize</code> boundary,
 appending the number of bytes of padding to the end of the block.</p>
+<p>If the original <code class="inline">message</code> is a multiple of <code class="inline">blocksize</code>, and additional block
+of bytes with value <code class="inline">blocksize</code> is added.</p>
 <h2>Examples</h2>
 <pre><code class="iex elixir">iex&gt; Matasano.pkcs7_padding(&quot;HELLO&quot;, 4)
-&lt;&lt;72, 69, 76, 76, 79, 3, 3, 3&gt;&gt;</code></pre>
+&lt;&lt;72, 69, 76, 76, 79, 3, 3, 3&gt;&gt;
+iex&gt; Matasano.pkcs7_padding(&quot;HELLO&quot;, 5)
+&lt;&lt;72, 69, 76, 76, 79, 5, 5, 5, 5, 5&gt;&gt;</code></pre>
 
   </section>
   
-    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L329" class="view_source">Source</a>
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L362" class="view_source">Source</a>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="pkcs7_unpad/1">
+    <span class="signature"><strong>pkcs7_unpad(data)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#pkcs7_unpad/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    
+  </section>
+  
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L367" class="view_source">Source</a>
   
 </section>
 <section class="detail">
@@ -685,7 +807,7 @@ appending the number of bytes of padding to the end of the block.</p>
 
   </section>
   
-    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L284" class="view_source">Source</a>
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L312" class="view_source">Source</a>
   
 </section>
 <section class="detail">
@@ -714,7 +836,7 @@ true</code></pre>
 
   </section>
   
-    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L312" class="view_source">Source</a>
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano.ex#L340" class="view_source">Source</a>
   
 </section>
 <section class="detail">
