@@ -21,7 +21,7 @@ defmodule Matasano.AES do
     if Enum.member?(opts, :nopad) do
       File.write!(path, data)
     else
-      File.write!(path, pkcs7_padding(data, 16))
+      File.write!(path, pad_pkcs7(data, 16))
     end
 
     args = ["aes-128-ecb", "-in", path, "-K", Base.encode16(key), "-nopad"]
@@ -51,7 +51,7 @@ defmodule Matasano.AES do
     if Enum.member?(opts, :nopad) do
       output
     else
-      pkcs7_unpad(output)
+      unpad_pkcs7(output)
     end
   end
 
@@ -86,18 +86,18 @@ defmodule Matasano.AES do
   Pad the `message` by extending it to the nearest `blocksize` boundary,
   appending the number of bytes of padding to the end of the block.
 
-  If the original `message` is a multiple of `blocksize`, and additional block
+  If the original `message` is a multiple of `blocksize`, an additional block
   of bytes with value `blocksize` is added.
 
   ## Examples
 
-      iex> Matasano.AES.pkcs7_padding("HELLO", 4)
+      iex> Matasano.AES.pad_pkcs7("HELLO", 4)
       <<72, 69, 76, 76, 79, 3, 3, 3>>
-      iex> Matasano.AES.pkcs7_padding("HELLO", 5)
+      iex> Matasano.AES.pad_pkcs7("HELLO", 5)
       <<72, 69, 76, 76, 79, 5, 5, 5, 5, 5>>
   """
-  @spec pkcs7_padding(String.t, non_neg_integer) :: String.t
-  def pkcs7_padding(message, blocksize) do
+  @spec pad_pkcs7(String.t, non_neg_integer) :: String.t
+  def pad_pkcs7(message, blocksize) do
     pad = blocksize - rem(byte_size(message), blocksize)
     message <> to_string(List.duplicate(pad, pad))
   end
@@ -107,10 +107,10 @@ defmodule Matasano.AES do
 
   ## Examples
 
-      iex> Matasano.AES.pkcs7_unpad(<<72, 69, 76, 76, 79, 3, 3, 3>>)
+      iex> Matasano.AES.unpad_pkcs7(<<72, 69, 76, 76, 79, 3, 3, 3>>)
       "HELLO"
   """
-  def pkcs7_unpad(data) do
+  def unpad_pkcs7(data) do
     <<pad>> = binary_part(data, byte_size(data), -1)
     binary_part(data, 0, byte_size(data) - pad)
   end
@@ -120,7 +120,7 @@ defmodule Matasano.AES do
   """
   @spec encrypt_aes_128_cbc(iodata, String.t, binary) :: String.t
   def encrypt_aes_128_cbc(data, key, iv) do
-    blocks = data |> pkcs7_padding(16) |> chunk(16)
+    blocks = data |> pad_pkcs7(16) |> chunk(16)
     encrypt_cbc([iv|blocks], key, [])
   end
 
@@ -143,7 +143,7 @@ defmodule Matasano.AES do
   def decrypt_aes_128_cbc(data, key, iv) do
     rev_blocks = [iv|chunk(data, 16)] |> Enum.reverse
 
-    decrypt_cbc(rev_blocks, key, []) |> pkcs7_unpad
+    decrypt_cbc(rev_blocks, key, []) |> unpad_pkcs7
   end
 
   defp decrypt_cbc([_], _key, acc), do: Enum.join(acc)

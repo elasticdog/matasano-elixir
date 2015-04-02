@@ -75,7 +75,7 @@ defmodule MatasanoTest do
     blocksize = 20
     output = "YELLOW SUBMARINE\x04\x04\x04\x04"
 
-    assert Matasano.AES.pkcs7_padding(message, blocksize) == output
+    assert Matasano.AES.pad_pkcs7(message, blocksize) == output
   end
 
   @tag :set2
