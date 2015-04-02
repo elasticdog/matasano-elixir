@@ -95,7 +95,7 @@ given <code class="inline">blocksize</code></p>
   
 </tr>
 <tr>
-  <td class="summary_signature"><a href="#pkcs7_padding/2">pkcs7_padding(message, blocksize)</a></td>
+  <td class="summary_signature"><a href="#pad_pkcs7/2">pad_pkcs7(message, blocksize)</a></td>
   
     <td class="summary_synopsis"><p>Pad the <code class="inline">message</code> by extending it to the nearest <code class="inline">blocksize</code> boundary,
 appending the number of bytes of padding to the end of the block</p>
@@ -103,16 +103,16 @@ appending the number of bytes of padding to the end of the block</p>
   
 </tr>
 <tr>
-  <td class="summary_signature"><a href="#pkcs7_unpad/1">pkcs7_unpad(data)</a></td>
+  <td class="summary_signature"><a href="#repeated_block?/2">repeated_block?(string, blocksize)</a></td>
   
-    <td class="summary_synopsis"><p>Remove the PKCS#7 padding from the end of <code class="inline">data</code></p>
+    <td class="summary_synopsis"><p>Detects if the <code class="inline">string</code> has a repeated block of the given <code class="inline">blocksize</code></p>
 </td>
   
 </tr>
 <tr>
-  <td class="summary_signature"><a href="#repeated_block?/2">repeated_block?(string, blocksize)</a></td>
+  <td class="summary_signature"><a href="#unpad_pkcs7/1">unpad_pkcs7(data)</a></td>
   
-    <td class="summary_synopsis"><p>Detects if the <code class="inline">string</code> has a repeated block of the given <code class="inline">blocksize</code></p>
+    <td class="summary_synopsis"><p>Remove the PKCS#7 padding from the end of <code class="inline">data</code></p>
 </td>
   
 </tr>
@@ -257,11 +257,11 @@ given <code class="inline">blocksize</code>.</p>
   
 </section>
 <section class="detail">
-  <div class="detail_header" id="pkcs7_padding/2">
-    <span class="signature"><strong>pkcs7_padding(message, blocksize)</strong></span>
+  <div class="detail_header" id="pad_pkcs7/2">
+    <span class="signature"><strong>pad_pkcs7(message, blocksize)</strong></span>
     <div class="detail_header_links">
       <span class="detail_type">(function)</span>
-      <a href="#pkcs7_padding/2" class="detail_link" title="Link to this function">#</a>
+      <a href="#pad_pkcs7/2" class="detail_link" title="Link to this function">#</a>
       <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
     </div>
   </div>
@@ -269,45 +269,24 @@ given <code class="inline">blocksize</code>.</p>
     <p>Specs:</p>
     <ul class="spec">
       
-        <li>pkcs7_padding(<a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a>, non_neg_integer) :: <a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a></li>
+        <li>pad_pkcs7(<a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a>, non_neg_integer) :: <a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a></li>
       
     </ul>
   
   <section class="docstring">
     <p>Pad the <code class="inline">message</code> by extending it to the nearest <code class="inline">blocksize</code> boundary,
 appending the number of bytes of padding to the end of the block.</p>
-<p>If the original <code class="inline">message</code> is a multiple of <code class="inline">blocksize</code>, and additional block
+<p>If the original <code class="inline">message</code> is a multiple of <code class="inline">blocksize</code>, an additional block
 of bytes with value <code class="inline">blocksize</code> is added.</p>
 <h2>Examples</h2>
-<pre><code class="iex elixir">iex&gt; Matasano.AES.pkcs7_padding(&quot;HELLO&quot;, 4)
+<pre><code class="iex elixir">iex&gt; Matasano.AES.pad_pkcs7(&quot;HELLO&quot;, 4)
 &lt;&lt;72, 69, 76, 76, 79, 3, 3, 3&gt;&gt;
-iex&gt; Matasano.AES.pkcs7_padding(&quot;HELLO&quot;, 5)
+iex&gt; Matasano.AES.pad_pkcs7(&quot;HELLO&quot;, 5)
 &lt;&lt;72, 69, 76, 76, 79, 5, 5, 5, 5, 5&gt;&gt;</code></pre>
 
   </section>
   
     <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano/aes.ex#L100" class="view_source">Source</a>
-  
-</section>
-<section class="detail">
-  <div class="detail_header" id="pkcs7_unpad/1">
-    <span class="signature"><strong>pkcs7_unpad(data)</strong></span>
-    <div class="detail_header_links">
-      <span class="detail_type">(function)</span>
-      <a href="#pkcs7_unpad/1" class="detail_link" title="Link to this function">#</a>
-      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
-    </div>
-  </div>
-  
-  <section class="docstring">
-    <p>Remove the PKCS#7 padding from the end of <code class="inline">data</code>.</p>
-<h2>Examples</h2>
-<pre><code class="iex elixir">iex&gt; Matasano.AES.pkcs7_unpad(&lt;&lt;72, 69, 76, 76, 79, 3, 3, 3&gt;&gt;)
-&quot;HELLO&quot;</code></pre>
-
-  </section>
-  
-    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano/aes.ex#L113" class="view_source">Source</a>
   
 </section>
 <section class="detail">
@@ -337,6 +316,27 @@ true</code></pre>
   </section>
   
     <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano/aes.ex#L78" class="view_source">Source</a>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="unpad_pkcs7/1">
+    <span class="signature"><strong>unpad_pkcs7(data)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#unpad_pkcs7/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    <p>Remove the PKCS#7 padding from the end of <code class="inline">data</code>.</p>
+<h2>Examples</h2>
+<pre><code class="iex elixir">iex&gt; Matasano.AES.unpad_pkcs7(&lt;&lt;72, 69, 76, 76, 79, 3, 3, 3&gt;&gt;)
+&quot;HELLO&quot;</code></pre>
+
+  </section>
+  
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano/aes.ex#L113" class="view_source">Source</a>
   
 </section>
 
