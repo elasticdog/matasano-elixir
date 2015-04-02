@@ -29,6 +29,7 @@ defmodule Matasano.Mixfile do
   # Type `mix help deps` for more examples and options
   defp deps do
     [{:earmark, "~> 0.1", only: :dev},
+     {:eflame, ~r/.*/, git: "https://github.com/proger/eflame.git", compile: "rebar compile"},
      {:ex_doc, "~> 0.7", only: :dev},
      {:exprof, "~> 0.2", only: :dev}]
   end

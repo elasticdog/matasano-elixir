@@ -1,4 +1,5 @@
 %{"earmark": {:hex, :earmark, "0.1.13"},
+  "eflame": {:git, "https://github.com/proger/eflame.git", "b87703d65590f05069be42eb9ef74040d3c7ecdc", []},
   "ex_doc": {:hex, :ex_doc, "0.7.2"},
   "exprintf": {:hex, :exprintf, "0.1.6"},
   "exprof": {:hex, :exprof, "0.2.0"}}
