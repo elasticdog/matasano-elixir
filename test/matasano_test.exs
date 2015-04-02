@@ -87,4 +87,10 @@ defmodule MatasanoTest do
 
     assert Matasano.AES.decrypt_aes_128_cbc(data, key, iv) == plaintext
   end
+
+  # Set 2 Challenge 11 - An ECB/CBC detection oracle
+  #
+  #     plaintext = File.read!(Path.join("data", "play-that-funky-music.txt"))
+  #     black_box_data = Matasano.AES.encryption_oracle(plaintext)
+  #     mode = Matasano.AES.detect_aes_128_mode(black_box_data)
 end

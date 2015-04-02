@@ -153,4 +153,38 @@ defmodule Matasano.AES do
     rest = [right|tail]
     decrypt_cbc(rest, key, [block|acc])
   end
+
+  @doc """
+  Encrypts `plaintext` using AES-128 with a randomly chosen mode/key/IV.
+
+  Also prepend and append 5 to 10 random bytes (count also chosen randomly) to
+  the plaintext.
+  """
+  def encryption_oracle(plaintext) do
+    pre_data  = :crypto.rand_bytes(:crypto.rand_uniform(5, 11))
+    post_data = :crypto.rand_bytes(:crypto.rand_uniform(5, 11))
+    data = pre_data <> plaintext <> post_data
+
+    random_mode = :random.uniform(2)
+    random_key  = :crypto.rand_bytes(16)
+
+    case random_mode do
+      1 ->
+        encrypt_aes_128_ecb(data, random_key)
+      2 ->
+        random_iv = :crypto.rand_bytes(16)
+        encrypt_aes_128_cbc(data, random_key, random_iv)
+    end
+  end
+
+  @doc """
+  Returns the most likely AES-128 mode (ECB or CBC) used to encrypt `data`.
+  """
+  def detect_aes_128_mode(data) do
+    if repeated_block?(data, 16) do
+      :ebs
+    else
+      :cbc
+    end
+  end
 end
