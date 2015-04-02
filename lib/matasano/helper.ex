@@ -102,6 +102,31 @@ defmodule Matasano.Helper do
   end
 
   @doc """
+  Parallel map, spawning as many processes as there are elements in the
+  `collection`.
+  """
+  @spec pmap(Enumerable.t, (any -> any)) :: list
+  def pmap(collection, fun) do
+    collection
+    |> Enum.map(&Task.async(fn -> fun.(&1) end))
+    |> Enum.map(&Task.await/1)
+  end
+
+  @doc """
+  Chunked parallel map, first partition the elements in `collection` into
+  chunks of `partition_size`, then pass those to pmap instead of the individual
+  elements.
+  """
+  @spec pmap_chunked(Enumerable.t, non_neg_integer, (any -> any)) :: list
+  def pmap_chunked(collection, partition_size, fun) do
+    # not quite sure this is done right...haven't had a successful use case yet
+    collection
+    |> Enum.chunk(partition_size, partition_size, [])
+    |> pmap(fun)
+    |> List.flatten
+  end
+
+  @doc """
   Generates a random string of alphanumeric characters of the requested `size`.
   """
   @spec random_alnum(non_neg_integer) :: String.t

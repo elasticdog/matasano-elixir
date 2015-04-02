@@ -34,12 +34,19 @@ defmodule Matasano.XorCipher do
   """
   @spec best_xor_score(String.t, [String.t]) :: {String.t, String.t, float}
   def best_xor_score(ciphertext, candidates) do
-    Enum.map(candidates, fn key ->
-      plaintext = repeating_xor(key, ciphertext)
-      score = english_score(plaintext)
-      {key, plaintext, score}
-    end)
+    candidates
+    |> Stream.map(&xor_score(&1, ciphertext))
     |> Enum.max_by fn {_, _, score} -> score end
+  end
+
+  @doc """
+  Returns data regarding the result of XOR cipher decryption of `ciphertext`
+  using the `key`.
+  """
+  def xor_score(key, ciphertext) do
+    plaintext = repeating_xor(key, ciphertext)
+    score = english_score(plaintext)
+    {key, plaintext, score}
   end
 
   @doc """
@@ -48,25 +55,11 @@ defmodule Matasano.XorCipher do
   """
   @spec detect_single_byte_xor([binary]) :: String.t
   def detect_single_byte_xor(collection) do
-    {:ok, agent} = Agent.start_link fn -> [] end
+    scores = pmap collection, &best_xor_score/1
 
-    pmap collection, fn(ciphertext) ->
-      best = best_xor_score(ciphertext)
-      Agent.update agent, fn list ->
-        [best|list]
-      end
-    end
-
-    {_key, plaintext, _score} =
-      Agent.get(agent, &(&1)) |> Enum.max_by fn {_, _, score} -> score end
+    {_key, plaintext, _score} = Enum.max_by scores, fn {_, _, score} -> score end
 
     plaintext
-  end
-
-  defp pmap(collection, fun) do
-    collection
-    |> Enum.map(&Task.async(fn -> fun.(&1) end))
-    |> Enum.map(&Task.await/1)
   end
 
   @doc """
@@ -79,12 +72,13 @@ defmodule Matasano.XorCipher do
 
     ciphertext
     |> key_parts(keysize)
-    |>
-    Enum.map(fn block ->
-      {key, _plaintext, _score} = best_xor_score(block)
-      key
-    end)
+    |> pmap(&best_single_byte_key/1)
     |> Enum.join
+  end
+
+  defp best_single_byte_key(block) do
+    {key, _plaintext, _score} = best_xor_score(block)
+    key
   end
 
   @doc """
