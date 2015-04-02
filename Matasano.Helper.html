@@ -102,6 +102,23 @@
   
 </tr>
 <tr>
+  <td class="summary_signature"><a href="#pmap/2">pmap(collection, fun)</a></td>
+  
+    <td class="summary_synopsis"><p>Parallel map, spawning as many processes as there are elements in the
+<code class="inline">collection</code></p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#pmap_chunked/3">pmap_chunked(collection, partition_size, fun)</a></td>
+  
+    <td class="summary_synopsis"><p>Chunked parallel map, first partition the elements in <code class="inline">collection</code> into
+chunks of <code class="inline">partition_size</code>, then pass those to pmap instead of the individual
+elements</p>
+</td>
+  
+</tr>
+<tr>
   <td class="summary_signature"><a href="#random_alnum/1">random_alnum(size \\ 16)</a></td>
   
     <td class="summary_synopsis"><p>Generates a random string of alphanumeric characters of the requested <code class="inline">size</code></p>
@@ -312,6 +329,59 @@ iex&gt; Matasano.Helper.hamming_weight(256)
   
 </section>
 <section class="detail">
+  <div class="detail_header" id="pmap/2">
+    <span class="signature"><strong>pmap(collection, fun)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#pmap/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>pmap(<a href="http://elixir-lang.org/docs/stable/elixir/Enumerable.html#t:t/0">Enumerable.t</a>, (any -> any)) :: list</li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Parallel map, spawning as many processes as there are elements in the
+<code class="inline">collection</code>.</p>
+
+  </section>
+  
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano/helper.ex#L109" class="view_source">Source</a>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="pmap_chunked/3">
+    <span class="signature"><strong>pmap_chunked(collection, partition_size, fun)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#pmap_chunked/3" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>pmap_chunked(<a href="http://elixir-lang.org/docs/stable/elixir/Enumerable.html#t:t/0">Enumerable.t</a>, non_neg_integer, (any -> any)) :: list</li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Chunked parallel map, first partition the elements in <code class="inline">collection</code> into
+chunks of <code class="inline">partition_size</code>, then pass those to pmap instead of the individual
+elements.</p>
+
+  </section>
+  
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano/helper.ex#L121" class="view_source">Source</a>
+  
+</section>
+<section class="detail">
   <div class="detail_header" id="random_alnum/1">
     <span class="signature"><strong>random_alnum(size \\ 16)</strong></span>
     <div class="detail_header_links">
@@ -333,7 +403,7 @@ iex&gt; Matasano.Helper.hamming_weight(256)
 
   </section>
   
-    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano/helper.ex#L108" class="view_source">Source</a>
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano/helper.ex#L133" class="view_source">Source</a>
   
 </section>
 <section class="detail">
@@ -367,7 +437,7 @@ iex&gt; Matasano.Helper.repeating_xor(&quot;a&quot;, &quot;hełło&quot;)
 
   </section>
   
-    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano/helper.ex#L131" class="view_source">Source</a>
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano/helper.ex#L156" class="view_source">Source</a>
   
 </section>
 <section class="detail">
@@ -395,7 +465,7 @@ iex&gt; Matasano.Helper.repeating_xor(&quot;a&quot;, &quot;hełło&quot;)
 
   </section>
   
-    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano/helper.ex#L148" class="view_source">Source</a>
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano/helper.ex#L173" class="view_source">Source</a>
   
 </section>
 

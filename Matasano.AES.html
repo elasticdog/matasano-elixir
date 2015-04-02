@@ -73,6 +73,13 @@ Encryption Standard (AES).</p>
   
 </tr>
 <tr>
+  <td class="summary_signature"><a href="#detect_aes_128_mode/1">detect_aes_128_mode(data)</a></td>
+  
+    <td class="summary_synopsis"><p>Returns the most likely AES-128 mode (ECB or CBC) used to encrypt <code class="inline">data</code></p>
+</td>
+  
+</tr>
+<tr>
   <td class="summary_signature"><a href="#detect_aes_in_ecb/2">detect_aes_in_ecb(collection, blocksize)</a></td>
   
     <td class="summary_synopsis"><p>Returns the first element from <code class="inline">collection</code> that has a repeated block of the
@@ -91,6 +98,13 @@ given <code class="inline">blocksize</code></p>
   <td class="summary_signature"><a href="#encrypt_aes_128_ecb/3">encrypt_aes_128_ecb(data, key, opts \\ [])</a></td>
   
     <td class="summary_synopsis"><p>Encrypt the given <code class="inline">data</code> with AES-128 in ECB mode using <code class="inline">key</code></p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#encryption_oracle/1">encryption_oracle(plaintext)</a></td>
+  
+    <td class="summary_synopsis"><p>Encrypts <code class="inline">plaintext</code> using AES-128 with a randomly chosen mode/key/IV</p>
 </td>
   
 </tr>
@@ -178,6 +192,24 @@ option.</p>
   
 </section>
 <section class="detail">
+  <div class="detail_header" id="detect_aes_128_mode/1">
+    <span class="signature"><strong>detect_aes_128_mode(data)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#detect_aes_128_mode/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    <p>Returns the most likely AES-128 mode (ECB or CBC) used to encrypt <code class="inline">data</code>.</p>
+
+  </section>
+  
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano/aes.ex#L183" class="view_source">Source</a>
+  
+</section>
+<section class="detail">
   <div class="detail_header" id="detect_aes_in_ecb/2">
     <span class="signature"><strong>detect_aes_in_ecb(collection, blocksize)</strong></span>
     <div class="detail_header_links">
@@ -254,6 +286,26 @@ given <code class="inline">blocksize</code>.</p>
   </section>
   
     <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano/aes.ex#L16" class="view_source">Source</a>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="encryption_oracle/1">
+    <span class="signature"><strong>encryption_oracle(plaintext)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#encryption_oracle/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    <p>Encrypts <code class="inline">plaintext</code> using AES-128 with a randomly chosen mode/key/IV.</p>
+<p>Also prepend and append 5 to 10 random bytes (count also chosen randomly) to
+the plaintext.</p>
+
+  </section>
+  
+    <a href="https://github.com/elasticdog/matasano-elixir/blob/master/lib/matasano/aes.ex#L163" class="view_source">Source</a>
   
 </section>
 <section class="detail">
